@@ -106,6 +106,11 @@
                         <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
                     </td>
                 </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-settings">
+                        <a href="../doctor/health_monitor.php" class="non-style-link-menu"><div><p class="menu-text">Health Monitor</p></a></div>
+                    </td>
+                </tr>
                 
             </table>
         </div>

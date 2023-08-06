@@ -77,6 +77,7 @@
                     </table>
                     </td>
                 </tr>
+                <!-- nav side bar -->
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-home menu-active menu-icon-home-active" >
                         <a href="index.php" class="non-style-link-menu non-style-link-menu-active"><div><p class="menu-text">Home</p></a></div></a>
@@ -113,9 +114,15 @@
                         <a href="settings.php" class="non-style-link-menu"><div><p class="menu-text">Settings</p></a></div>
                     </td>
                 </tr>
+                <tr class="menu-row" >
+                    <td class="menu-btn menu-icon-settings">
+                        <a href="../doctor/health_monitor.php" class="non-style-link-menu"><div><p class="menu-text">Health Monitor</p></a></div>
+                    </td>
+                </tr>
                 
             </table>
         </div>
+        <!-- end side bar -->
         <div class="dash-body" style="margin-top: 15px">
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;" >
                         

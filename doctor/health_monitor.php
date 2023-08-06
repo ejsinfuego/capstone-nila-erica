@@ -29,7 +29,7 @@
     session_start();
 
     if(isset($_SESSION["user"])){
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p'){
+        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='d'){
             header("location: ../login.php");
         }else{
             $useremail=$_SESSION["user"];
@@ -42,10 +42,10 @@
 
     //import database
     include("../connection.php");
-    $userrow = $database->query("select * from patient where pemail='$useremail'");
+    $userrow = $database->query("select * from doctor where docemail='$useremail'");
     $userfetch=$userrow->fetch_assoc();
-    $userid= $userfetch["pid"];
-    $username=$userfetch["pname"];
+    $userid= $userfetch["docid"];
+    $username=$userfetch["docname"];
 
     ?>
     <div class="container">
@@ -110,6 +110,10 @@
         $medicineid= $medicinefetch["medicine_id"];
         $medicinename=$medicinefetch["med_name"];
 
+        //get all patients from database and display it in a table
+        $patientrow = $database->query("select * from patient");
+        $patientfetch=$patientrow->fetch_assoc();
+
 
         ?>
 
@@ -118,55 +122,30 @@
             echo $_SESSION['message'];
             unset($_SESSION['message']);
         }?></div>
+        <div>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Sex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     <?php foreach($patientrow as $patientfetch){?>
+      <th scope="row"><?php echo $patientfetch['pid']; ?></th>
+      <td><?php echo $patientfetch['pname']; ?></td>
+      <td><?php echo $patientfetch['pdob']; }?></td>
+      <td>
+        <a href="edit_patient_health.php?pid=<?php echo $patientfetch['pid']; ?>" class="btn btn-primary">Edit Patient
+      </a></td>
+    </tr>
+    </table>
+        </div>
         <form method="POST" action="submit_requests_medicine.php">
-            <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
-                <tr>
-                    <td
-                        <lable for="medicine_name">Medicine</lable>
-                    </td>
-                </tr>
-                <input type="hidden" name="patient_id" value="<?php echo $userid ?>">
-                <tr>
-                    <td>
-                       <select name="medicine_id">
-                            <?php
-                            foreach($medicinerow as $medicinefetch){
-                                echo "<option value=".$medicinefetch['medicine_id'].">".$medicinefetch['med_name']."</option>";
-                            }?>
-                       </select>
-                    </td>
-                </tr>
-                <tr>
-                        <td>
-                        <label>Quantity</label>
-                        </td>
-                        <td>
-                        <input type="number" name="quantity" placeholder="Quantity">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <label>Prescription ID</label>
-                        </td>
-                        <td>
-                        <input type="number" name="prescription_id" placeholder="prescription_id">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <label>note</label>
-                        </td>
-                        <td>
-                        <input type="text" name="note" placeholder="note">
-                        </td>
-                    </tr>
-                    <tr></tr>
-                        <td>
-                        <input type="submit" name="submit" value="submit">
-                        </td>
-                </form>       
-                        
-            </table>
+        </form>
         </div>
     </div>
 
