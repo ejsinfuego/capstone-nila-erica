@@ -118,14 +118,14 @@
             echo $_SESSION['message'];
             unset($_SESSION['message']);
         }?></div>
-        <form method="POST" action="submit_requests_medicine.php" enctype="multiform">
+        <form method="POST" action="submit_requests_medicine.php">
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
-                    <td>
+                    <td
                         <lable for="medicine_name">Medicine</lable>
                     </td>
                 </tr>
-                <input type="hidden" name="patient_id" value="<?php echo $userid ?>">
+              
                 <tr>
                     <td>
                        <select name="medicine_id">
