@@ -1,4 +1,4 @@
-<?php include '../header_v2.php';?>
+<?php include(__DIR__ . '/../_header_v2.php');?>
             <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;margin-left: 22px;border-radius: 10px;">
                 <form method="POST" action="submitConsultation.php" class="text-start" style="border-radius: 10px;">
                     <h2 class="text-center justify-content-around" style="text-shadow: 0px 0px;padding-bottom: 0;">Book an Appointment</h2>
@@ -19,4 +19,4 @@
         </div>
     </div>
 </div>
-<?php include '../footer.php'; ?>
+<?php include(__DIR__ . '/../_footer.php'); ?>

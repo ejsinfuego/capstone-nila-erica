@@ -5,150 +5,109 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>PEW</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/styles.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
 </head>
-<?php 
 
-session_start();
-
-    if(isset($_SESSION["user"])){
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='d'){
-            header("location: ../login_v2.php");
-        }else{
-            $useremail=$_SESSION["user"];
-        }
-
-    }else{
-        header("location: ../login_v2.php");
-    }
-
-        //import database
-        include("../connection.php");
-        $userrow = $database->query("select * from doctor where docemail='$useremail'");
-        $userfetch=$userrow->fetch_assoc();
-        $userid= $userfetch["docid"];
-        $username=$userfetch["docname"];
-    
-        ?>
-
-  
-    <?php 
-    
-        if(isset($_SESSION['message']) && $_SESSION['message'] !=''){
-        echo '<div class="alert alert-success" role="alert">'.$_SESSION['message'].'</div>';
-        unset($_SESSION['message']);
-        }
-        
-        $appointmentsCount = count($database->query("select * from consultation where stat='pending'")->fetch_all());
-        $medicine_requests_count = count($database->query("select * from request_medicine where status='pending'")->fetch_all());
-        $patientsCount = count($database->query("select * from patient")->fetch_all());
-        
-    ?>
-
-<body style="font-family: Montserrat, sans-serif;">
-<div class="container">
-    <nav class="navbar navbar-expand-md shadow py-3" data-bs-theme="light" style="--bs-body-color: #212529;--bs-primary: #090c9b;--bs-primary-rgb: 9,12,155;background: linear-gradient(69deg, #1e80c1 56%, white 100%), var(--bs-primary);color: #fbfff1;border-color: #3c3744;border-bottom: 4.4px none #3c3744;">
+<body style="font-family: Montserrat, sans-serif;background: #f1f0f0;">
+    <nav class="navbar navbar-expand-md shadow py-3" data-bs-theme="light" style="--bs-body-color: #212529;--bs-primary: #090c9b;--bs-primary-rgb: 9,12,155;background: linear-gradient(69deg, #1e80c1 56%, white 100%), var(--bs-primary);color: #fbfff1;border-color: #3c3744;border-bottom: 4.4px none #3c3744;font-family: Montserrat, sans-serif;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: #a5def2;text-shadow: 20px -1px 5px var(--bs-primary);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor" style="box-shadow: 0px 0px;text-shadow: 4px 2px 3px;">
                         <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
                         <path d="M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.6 483.2 483.9 512 448.5 512H128.1C92.75 512 64.09 483.3 64.09 448V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5H575.8zM328 232V176C328 167.2 320.8 160 312 160H264C255.2 160 248 167.2 248 176V232H192C183.2 232 176 239.2 176 248V296C176 304.8 183.2 312 192 312H248V368C248 376.8 255.2 384 264 384H312C320.8 384 328 376.8 328 368V312H384C392.8 312 400 304.8 400 296V248C400 239.2 392.8 232 384 232H328z"></path>
-                    </svg></span><span style="font-family: Alata, sans-serif;font-size: 25px;color: #fbfff1;">RHUConnect</span></a><button data-bs-toggle="collapse" class="navbar-toggler text-center" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1" style="color: #fbfff1;">
+                    </svg></span><span style="font-family: Montserrat, sans-serif;font-size: 23px;color: #fbfff1;font-weight: bold;">RHUConnect</span></a><button data-bs-toggle="collapse" class="navbar-toggler text-center" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-2" style="color: #fbfff1;">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="appointments.php" style="font-family: Allerta, sans-serif;color: #fbfff1;">Appointment</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="jello" href="medicine_inventory.php" style="font-family: Allerta, sans-serif;color: #fbfff1;">Medicine</a></li>
-                    <li class="nav-item" style="color: #fbfff1;"><a class="nav-link" data-bss-hover-animate="jello" href="#" style="font-family: Allerta, sans-serif;color: #fbfff1;">Consultation</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Allerta, sans-serif;color: rgb(251,255,241);">Health Monitoring</a></li>
-                </ul><button class="btn btn-warning" data-bss-hover-animate="bounce" type="button" style="background: #1e80c1;font-family: Allerta, sans-serif;color: #fbfff1;border-style: none;">Logout</button>
+                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
+                    <li class="nav-item" style="color: #fbfff1;"><a class="nav-link active" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Consultation</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Monitoring</a></li>
+                </ul><button class="btn btn-warning" data-bss-hover-animate="bounce" type="button" style="background: #0072c6;font-family: Montserrat, sans-serif;color: #fbfff1;border-style: none;">Logout</button>
             </div>
             <aside></aside>
         </div>
     </nav>
- 
-    <div class="container py-4 py-xl-5" style="height: 330px;">
-    <div class="row mb-5" style="border-radius: 10px;padding: 23px;background: #fbfff1;">
-        <section class="py-4 py-xl-5">
-            <div class="container h-100">
-                <div class="row h-100">
-                    <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
-                        <div>
-                            <h2 class="text-uppercase fw-bold mb-3">Biben dum<br />fringi dictum, augue purus</h2>
-                            <p class="mb-4">Etiam a rutrum, mauris lectus aptent convallis. Fusce vulputate aliquam, sagittis odio metus. Nulla porttitor vivamus viverra laoreet, aliquam netus.</p><button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button" style="background: #1e80c1;">Book an Appointment</button>
+    <div class="container py-4 py-xl-5" style="height: 333.3px;">
+        <div class="row mb-5" style="border-radius: 10px;padding: 23px;background: url('../assets/img/IMG_20230814_112809.jpg') center / cover no-repeat, #fbfff1;">
+            <section class="py-4 py-xl-5">
+                <div class="container h-100">
+                    <div class="row h-100">
+                        <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                            <div>
+                                <h2 class="text-uppercase fw-bold mb-3" style="text-shadow: 2px 3px 4px rgb(255,255,255);">Book medical appointment online</h2>
+                                <p class="mb-4" style="text-shadow: 2px 1px 3px rgb(255,255,255);">Reach out to your Rural Health Unit without leaving your doorstep.</p><button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button" style="background: #1e80c1;">Book an Appointment</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</div>
-    <div class="container py-4 py-xl-5" style="background: #fbfff1;margin-top: 92px;border-radius: 10px;color: #3c3744;">
-    <div class="row gy-4 row-cols-2 row-cols-md-4">
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
-                        <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
-                        <path d="M152 64H296V24C296 10.75 306.7 0 320 0C333.3 0 344 10.75 344 24V64H384C419.3 64 448 92.65 448 128V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V128C0 92.65 28.65 64 64 64H104V24C104 10.75 114.7 0 128 0C141.3 0 152 10.75 152 24V64zM48 248H128V192H48V248zM48 296V360H128V296H48zM176 296V360H272V296H176zM320 296V360H400V296H320zM400 192H320V248H400V192zM400 408H320V464H384C392.8 464 400 456.8 400 448V408zM272 408H176V464H272V408zM128 408H48V448C48 456.8 55.16 464 64 464H128V408zM272 192H176V248H272V192z"></path>
-                    </svg></div>
-                <div class="px-3">
-                    <h2 class="fw-bold mb-0"><?php echo $appointmentsCount; ?></h2>
-                    <p class="mb-0">Appointments</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" style="background: #1e80c1;"><svg class="bi bi-prescription" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6h-2ZM6 7h1.5a.5.5 0 0 1 0 1H6V7Z"></path>
-                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1V1Zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4H4ZM3 3h10V1H3v2Z"></path>
-                    </svg></div>
-                <div class="px-3">
-                    <h2 class="fw-bold mb-0">221</h2>
-                    <p class="mb-0">Prescriptions</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" style="background: #1e80c1;"><svg class="bi bi-person-vcard-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"></path>
-                    </svg></div>
-                <div class="px-3">
-                    <h2 class="fw-bold mb-0"><?php echo $patientsCount; ?></h2>
-                    <p class="mb-0">Patients</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
-                <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" style="background: #1e80c1;"><svg class="bi bi-capsule" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
-                    </svg></div>
-                <div class="px-3">
-                    <h2 class="fw-bold mb-0"><?php echo $medicine_requests_count; ?></h2>
-                    <p class="mb-0">Medicine Requests</p>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
-</div>
+    <div class="container py-4 py-xl-5" style="background: #ffffff;margin-top: 44px;border-radius: 10px;color: #3c3744;height: 274.4px;">
+        <div class="row gy-4 row-cols-2 row-cols-md-4">
+            <div class="col">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
+                    <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                            <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+                            <path d="M152 64H296V24C296 10.75 306.7 0 320 0C333.3 0 344 10.75 344 24V64H384C419.3 64 448 92.65 448 128V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V128C0 92.65 28.65 64 64 64H104V24C104 10.75 114.7 0 128 0C141.3 0 152 10.75 152 24V64zM48 248H128V192H48V248zM48 296V360H128V296H48zM176 296V360H272V296H176zM320 296V360H400V296H320zM400 192H320V248H400V192zM400 408H320V464H384C392.8 464 400 456.8 400 448V408zM272 408H176V464H272V408zM128 408H48V448C48 456.8 55.16 464 64 464H128V408zM272 192H176V248H272V192z"></path>
+                        </svg></div>
+                    <div class="px-3">
+                        <h2 class="fw-bold mb-0">123+</h2>
+                        <p class="mb-0">Appointments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
+                    <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-prescription">
+                            <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6h-2ZM6 7h1.5a.5.5 0 0 1 0 1H6V7Z"></path>
+                            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1V1Zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4H4ZM3 3h10V1H3v2Z"></path>
+                        </svg></div>
+                    <div class="px-3">
+                        <h2 class="fw-bold mb-0">45+</h2>
+                        <p class="mb-0">Prescriptions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
+                    <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-disabled-mobile="true" data-bss-hover-animate="tada" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-vcard-fill">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"></path>
+                        </svg></div>
+                    <div class="px-3">
+                        <h2 class="fw-bold mb-0">67+</h2>
+                        <p class="mb-0">Patients</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
+                    <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule">
+                            <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
+                        </svg></div>
+                    <div class="px-3">
+                        <h2 class="fw-bold mb-0">89</h2>
+                        <p class="mb-0">Medicine Requests</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container py-4 py-xl-5">
         <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 fs-6 fw-lighter flex-shrink-0 justify-content-center">
             <div class="col">
                 <div class="card flex-grow-0">
                     <div class="card-body d-flex flex-column align-items-center p-4" style="margin-left: 59px;margin-right: 59px;">
-                        <a href="request_medicine.php">
                         <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon" style="background: #1e80c1;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule">
                                 <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
                             </svg></div>
-                            </a>   
                         <h4 class="card-title" style="font-weight: bold;">Medicine</h4>
                         <p class="card-text" style="padding-left: 0px;padding-right: 0px;">You can book your test here.</p>
                     </div>
@@ -215,12 +174,12 @@ session_start();
         </footer>
     </div>
     <footer></footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+    <script src="../assets/js/script.min.js"></script>
 </body>
 
 </html>

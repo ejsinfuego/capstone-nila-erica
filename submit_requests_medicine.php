@@ -1,14 +1,15 @@
 <?php 
 #write a code to from the request_medicine user input and store in the database
 
-require '../vendor/autoload.php';
+require '.\vendor\autoload.php';
 use Carbon\Carbon;
 session_start();
 $timeNow = Carbon::now('Asia/Kolkata');
 
 
          //write code that post the request to the database for medicine request
-         include("../connection.php");
+         include("connection.php");
+         
          
  
        
@@ -26,10 +27,10 @@ $timeNow = Carbon::now('Asia/Kolkata');
                   $database->query("update medicine_inventory set med_qty = med_qty - $quantity where medicine_id = '".$_POST['medicine_id']."'");
                   $database->query("insert into request_medicine(medicine_id, quantity, prescription_id, patient_id, status, note, created_at, updated_at) values('$medicineid','$quantity','$prescriptionid','$patientid','$status','$note','$date','$date')");
                   $_SESSION['message']="Request sent!";
-                  header("location: request_medicine.php");
+                  header("location: ./patients/request_medicine.php");
           }else{
                $_SESSION['message']="There's no enough stock in the inventory!";
-               header("location: requests_medicine.php");
+               header("location: ./patients/requests_medicine.php");
           }
          }echo "failed";
 

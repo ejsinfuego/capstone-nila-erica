@@ -1,16 +1,17 @@
-<?php include '../header_v2.php'; ?>
+<?php 
+$title = "Medicine Requests";
+include(__DIR__ . '/../_header_v2.php'); ?>
 <?php 
 
-    if( $_SESSION['usertype'] != 'p'){
+    if( $_SESSION['usertype'] != 'd'){
         header('location: ../unauthorized.php');
     }
 
     //get available medicine list from database
     //write an sql command which gets the med name and patient name in using request_medicine table using inner join
-    $medicinerow = $database->query("select patient.pname, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where request_medicine.status ='pending' and patient_id = $userid;
+    $medicinerow = $database->query("select patient.pname, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where request_medicine.status ='pending';
     ");
     $medicinefetch=$medicinerow->fetch_assoc();
-    
 ?>
             <div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
                 <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
@@ -41,4 +42,5 @@
             </div>
         </div>
     </div>
-<?php include '../footer.php'; ?>
+
+<?php include(__DIR__ . '/../_footer.php') ?>

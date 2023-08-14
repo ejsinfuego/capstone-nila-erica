@@ -1,4 +1,6 @@
-<?php include '../header_v2.php'; ?>
+<?php 
+$title = "Request Medicine";
+include(__DIR__ . '/../_header_v2.php'); ?>
 
             <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;margin-left: 22px;border-radius: 10px;font-family: Montserrat, sans-serif;">
                 <?php
@@ -10,7 +12,7 @@
                     $medicinename=$medicinefetch["med_name"];
 
                 ?>
-                <form method="POST" action="submit_requests_medicine.php" class="text-start" >
+                <form method="POST" action="../submit_requests_medicine.php" class="text-start" >
                         <h2 class="text-center justify-content-around" style="text-shadow: 0px 0px;padding-bottom: 0;">Request Medicine</h2>
                         <h6 class="text-center">Fill out this form with necessary information request medicine.</h6><label class="form-label">Available Medicine</label>
                         <input type="hidden" name="patient_id" value="<?php echo $userid; ?>">
@@ -32,4 +34,4 @@
         </div>
     </div>
   
-<?php include '../footer.php' ?>
+<?php include(__DIR__ .'/../_footer.php'); ?>
