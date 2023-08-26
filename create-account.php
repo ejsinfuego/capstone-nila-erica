@@ -1,23 +1,15 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html data-bs-theme="light" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/animations.css">  
-    <link rel="stylesheet" href="css/main.css">  
-    <link rel="stylesheet" href="css/signup.css">
-        
-    <title>Create Account</title>
-    <style>
-        .container{
-            animation: transitionIn-X 0.5s;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>PEW</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
 </head>
-<body>
 <?php
 
 require 'vendor/autoload.php';
@@ -40,19 +32,14 @@ $_SESSION["date"]=$date;
 
 $timeNow = Carbon::now('Asia/Kolkata');
 
-
 //import database
 include("connection.php");
-
-
-
-
 
 if($_POST){
 
     $date = date('Y-m-d H:i:s');
     $result= $database->query("select * from webuser");
-
+    
     $fname=$_SESSION['personal']['fname'];
     $lname=$_SESSION['personal']['lname'];
     $name=$fname." ".$lname;
@@ -86,7 +73,7 @@ if($_POST){
             $_SESSION["usertype"]="p";
             $_SESSION["username"]=$fname;
 
-            header('Location: patient/index.php');
+            header('Location: patients/index.php');
             $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>';
         }
         
@@ -104,89 +91,63 @@ if($_POST){
 
 ?>
 
-
-    <center>
-    <div class="container">
-        <table border="0" style="width: 69%;">
-            <tr>
-                <td colspan="2">
-                    <p class="header-text">Let's Get Started</p>
-                    <p class="sub-text">It's Okey, Now Create User Account.</p>
-                </td>
-            </tr>
-            <tr>
-                <form action="" method="POST" >
-                <td class="label-td" colspan="2">
-                    <label for="newemail" class="form-label">Email: </label>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <input type="email" name="newemail" class="input-text" placeholder="Email Address" required>
-                </td>
-                
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <label for="tele" class="form-label">Mobile Number: </label>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <input type="tel" name="tele" class="input-text"  placeholder="ex: 0712345678" pattern="[0]{1}[0-9]{9}" >
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <label for="newpassword" class="form-label">Create New Password: </label>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <input type="password" name="newpassword" class="input-text" placeholder="New Password" required>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <label for="cpassword" class="form-label">Confirm Password: </label>
-                </td>
-            </tr>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required>
-                </td>
-            </tr>
-     
-            <tr>
-                
-                <td colspan="2">
-                    <?php echo $error ?>
-
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >
-                </td>
-                <td>
-                    <input type="submit" value="Sign Up" class="login-btn btn-primary btn">
-                </td>
-
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <br>
-                    <label for="" class="sub-text" style="font-weight: 280;">Already have an account&#63; </label>
-                    <a href="login.php" class="hover-link1 non-style-link">Login</a>
-                    <br><br><br>
-                </td>
-            </tr>
-                </form>
-            </tr>
-        </table>
-
-    </div>
-</center>
+<body>
+    <section class="position-relative py-4 py-xl-5" style="font-family: Montserrat, sans-serif;">
+        <section class="py-4 py-xl-5">
+            <div class="container h-100">
+                <div class="row h-100">
+                    <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                        <div>
+                            <h2 class="text-uppercase fw-bold mb-3">rHUCONNECT</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xxl-3" style="height: auto;margin-bottom: -51px;">
+                    <div class="row mb-5" style="height: auto;">
+                        <div class="col-md-8 col-xl-6 text-center mx-auto px-lg-0" style="padding-left: 0px;padding-right: 0px;width: 325px;height: 47.4px;">
+                            <h2>Let's get started</h2>
+                            <p class="w-lg-50">Now, create your log-ins.</p>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-6 col-xl-4 col-xxl-12">
+                            <div class="card mb-5">
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <label class="form-label">Email</label>
+                                    <form class="text-center" method="post">
+                                        <div class="mb-3">
+                                            <input class="form-control" type="email" name="newemail" placeholder="Email">
+                                        <label class="form-label">Phone Number</label>
+                                        <input class="form-control" type="phone" name="tele" placeholder="Phone Number"></div>
+                                        <div class="mb-3">
+                                        <label class="form-label">Password</label><input class="form-control" type="password" name="newpassword" placeholder="Email"></div>
+                                        <label class="form-label">Repeat Password</label>
+                                        <div class="mb-3">
+                                            <input class="form-control" type="password" name="cpassword" placeholder="Password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input class="btn btn-primary d-block w-100" type="submit" style="background: #1e80c1;">
+                                        </div>
+                                        <p class="text-muted">Login</p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/js/script.min.js"></script>
 </body>
+
 </html>

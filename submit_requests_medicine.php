@@ -27,12 +27,15 @@ $timeNow = Carbon::now('Asia/Kolkata');
                   $database->query("update medicine_inventory set med_qty = med_qty - $quantity where medicine_id = '".$_POST['medicine_id']."'");
                   $database->query("insert into request_medicine(medicine_id, quantity, prescription_id, patient_id, status, note, created_at, updated_at) values('$medicineid','$quantity','$prescriptionid','$patientid','$status','$note','$date','$date')");
                   $_SESSION['message']="Request sent!";
-                  header("location: ./patients/request_medicine.php");
+                  $_SESSION['show_modal'] = "myModal";
+                  header("location: ./patients/requests_medicine.php");
+             }
+                  header("location: ./patients/medicine_requests.php");
           }else{
                $_SESSION['message']="There's no enough stock in the inventory!";
+               $_SESSION['show_modal'] = "myModal";
                header("location: ./patients/requests_medicine.php");
-          }
-         }echo "failed";
+          }echo "failed";
 
 
 

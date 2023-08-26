@@ -28,10 +28,17 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                             </tr>
                         </thead>
                         <tbody style="border-style: solid;background: rgba(255,255,255,0);">
-                        <?php 
+                        <?php
+                        if($medicinerow->num_rows==0){
+                            echo "<tr style='border-style: solid;background: rgba(255,255,255,0);'>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>No Medicine Requests</td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'></td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'></td>";
+                            echo "</tr>";
+                        }else
                         foreach($medicinerow as $medicinefetch) {
                             echo "<tr style='border-style: solid;background: rgba(255,255,255,0);'>";
-                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['pname']."</td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['med_name']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['quantity']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['status']."</td>";
                             echo "</tr>";

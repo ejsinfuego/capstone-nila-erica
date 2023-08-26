@@ -5,7 +5,6 @@ include(__DIR__ . "/../_header_v2.php");
 $appointments = count($database->query("select * from consultation where patient_id = ".$userid)->fetch_all());
 $medicine_requests_count = count($database->query("select * from request_medicine where patient_id = ".$userid)->fetch_all());
 
-
 ?>
     <div class="container py-4 py-xl-2" style="height: 300.3px;">
         <div class="row mb-5" style="border-radius: 10px;padding: 23px;background: url('../assets/img/IMG_20230814_112809.jpg') center / cover no-repeat, #fbfff1;">

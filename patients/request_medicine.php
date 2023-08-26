@@ -8,8 +8,10 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                     //get available medicine list from database
                     $medicinerow = $database->query("select * from medicine_inventory where med_qty >0");
                     $medicinefetch=$medicinerow->fetch_assoc();
+                    if($medicinerow->num_rows > 0){
                     $medicineid= $medicinefetch["medicine_id"];
                     $medicinename=$medicinefetch["med_name"];
+                    }
 
                 ?>
                 <form method="POST" action="../submit_requests_medicine.php" class="text-start" >
@@ -18,9 +20,13 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                         <input type="hidden" name="patient_id" value="<?php echo $userid; ?>">
                         <select class="form-select" name="medicine_id">
                         <?php
-                                foreach($medicinerow as $medicinefetch){
+                                if($medicinerow->num_rows==0){
+                                    echo "<option value=''>No Medicine Available</option>";
+                                }else{
+                                    foreach($medicinerow as $medicinefetch){
                                     echo "<option value=".$medicinefetch['medicine_id'].">".$medicinefetch['med_name']."</option>";
-                                }?>
+                                }
+                            }?>
                         </select>
                     <label class="form-label" for="quantity">Quantity</label>
                     <input class="form-control" type="number" name="quantity">
@@ -28,7 +34,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                     <textarea class="form-control" name="note"></textarea>
                     <label class="form-label">Prescription ID</label>
                     <input class="form-control" type="text"  name="prescription_id">
-                    <input type="submit" name="submit" value="submit" class="btn btn-lg btn-primary py-md-0 my-md-0 my-sm-0 py-sm-5 my-lg-4 px-lg-3 py-lg-0" style="margin-top: 18px;margin-bottom: 18px;background: #3d52d5;padding-top: 0px;padding-bottom: 0px;height: 49px;">
+                    <input type="submit" name="submit" value="submit" class="btn btn-lg btn-primary py-md-0 my-md-0 my-sm-0 py-sm-5 my-lg-4 px-lg-3 py-lg-0" style="margin-top: 18px;margin-bottom: 18px;background: #3d52d5;padding-top: 0px;padding-bottom: 0px;height: 35px;">
                 </form>
             </div>
         </div>
