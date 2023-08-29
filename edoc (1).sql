@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2023 at 02:27 PM
+-- Generation Time: Aug 29, 2023 at 06:28 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -35,22 +35,6 @@ CREATE TABLE `admin` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `appointment`
---
-
-CREATE TABLE `appointment` (
-  `appoid` int(11) NOT NULL,
-  `apponum` int(3) DEFAULT NULL,
-  `scheduleid` int(10) DEFAULT NULL,
-  `appodate` date DEFAULT NULL,
-  `type` varchar(100) NOT NULL,
-  `time` time NOT NULL,
-  `patient_pid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `consultation`
 --
 
@@ -73,7 +57,8 @@ INSERT INTO `consultation` (`consultation_id`, `patient_id`, `stat`, `type`, `da
 (16, 24, 'pending', 'xray', '2023-08-30', '03:44:00', '2023-08-24 21:14:46', '2023-08-24 21:14:46'),
 (18, 25, 'pending', 'urinalysis', '2023-08-29', '09:30:00', '2023-08-25 08:14:43', '2023-08-25 08:14:43'),
 (19, 25, 'pending', 'xray', '2023-09-08', '13:47:00', '2023-08-25 08:17:13', '2023-08-25 08:17:13'),
-(20, 25, 'pending', 'xray', '2023-08-29', '01:48:00', '2023-08-25 08:18:53', '2023-08-25 08:18:53');
+(20, 25, 'pending', 'xray', '2023-08-29', '01:48:00', '2023-08-25 08:18:53', '2023-08-25 08:18:53'),
+(24, 25, 'pending', 'xray', '2023-08-31', '04:02:00', '2023-08-29 09:32:34', '2023-08-29 09:32:34');
 
 -- --------------------------------------------------------
 
@@ -136,7 +121,7 @@ CREATE TABLE `medicine_inventory` (
 
 INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_qty`, `status`) VALUES
 (3, 'Mefenamic', 697, 'high'),
-(4, 'Amoxicillin', 4918, 'good');
+(4, 'Amoxicillin', 4898, 'good');
 
 -- --------------------------------------------------------
 
@@ -221,7 +206,8 @@ INSERT INTO `request_medicine` (`request_medicine_id`, `medicine_id`, `note`, `q
 (25, 3, 'enge', 200, 'pending', 24, 0, '2023-08-24 23:14:42', '2023-08-24 23:14:42'),
 (26, 4, 'enge', 20, 'pending', 25, 2215, '2023-08-25 08:19:33', '2023-08-25 08:19:33'),
 (27, 4, 'please', 15, 'pending', 25, 2214, '2023-08-25 08:25:21', '2023-08-25 08:25:21'),
-(28, 4, 'hagad', 25, 'pending', 25, 2214, '2023-08-25 10:21:25', '2023-08-25 10:21:25');
+(28, 4, 'hagad', 25, 'pending', 25, 2214, '2023-08-25 10:21:25', '2023-08-25 10:21:25'),
+(29, 4, 'This is the sample note', 20, 'pending', 25, 2214, '2023-08-29 09:33:10', '2023-08-29 09:33:10');
 
 -- --------------------------------------------------------
 
@@ -265,14 +251,6 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`aemail`);
-
---
--- Indexes for table `appointment`
---
-ALTER TABLE `appointment`
-  ADD PRIMARY KEY (`appoid`),
-  ADD KEY `scheduleid` (`scheduleid`),
-  ADD KEY `fk_appointment_patient1` (`patient_pid`);
 
 --
 -- Indexes for table `consultation`
@@ -343,16 +321,10 @@ ALTER TABLE `webuser`
 --
 
 --
--- AUTO_INCREMENT for table `appointment`
---
-ALTER TABLE `appointment`
-  MODIFY `appoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
 -- AUTO_INCREMENT for table `consultation`
 --
 ALTER TABLE `consultation`
-  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -382,17 +354,11 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `request_medicine`
 --
 ALTER TABLE `request_medicine`
-  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `appointment`
---
-ALTER TABLE `appointment`
-  ADD CONSTRAINT `fk_appointment_patient1` FOREIGN KEY (`patient_pid`) REFERENCES `patient` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `consultation`
