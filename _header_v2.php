@@ -28,6 +28,7 @@ $title = $title ?? 'RHUConnect';
 session_start();
 
     if(isset($_SESSION["user"])){
+        //check if the user is logged in and if the user is a patient or doctor
         if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p' and $_SESSION['usertype']!='d'){
             header("location: ../login_v2.php");
         }else{

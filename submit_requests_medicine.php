@@ -1,5 +1,5 @@
 <?php 
-#write a code to from the request_medicine user input and store in the database
+#code to from the request_medicine user input and store in the database
 
 require '.\vendor\autoload.php';
 use Carbon\Carbon;
@@ -7,7 +7,7 @@ session_start();
 $timeNow = Carbon::now('Asia/Kolkata');
 
 
-         //write code that post the request to the database for medicine request
+         //code that post the request to the database for medicine request
          include("connection.php");
          
          
@@ -15,6 +15,7 @@ $timeNow = Carbon::now('Asia/Kolkata');
        
          $getNumbers = $database->query("select med_qty from medicine_inventory where medicine_id = '".$_POST['medicine_id']."'");
          if(isset($_POST["submit"])){
+          
                $medicineid=$_POST['medicine_id'];
                $quantity=$_POST['quantity'];
                $prescriptionid=$_POST['prescription_id'];

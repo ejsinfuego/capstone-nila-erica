@@ -12,3 +12,4 @@
     }
     $_SESSION['message'] = "Appointment(s) deleted successfully";
     header('location: appointments.php');    
+    

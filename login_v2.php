@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PEW</title>
+    <title>RhuConnect</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
@@ -31,7 +31,6 @@ $date = date('Y-m-d');
 
 $_SESSION["date"]=$date;
 
-
 //import database
 include("connection.php");
 
@@ -43,13 +42,12 @@ if($_POST){
     
     $error='<label for="promter" class="form-label"></label>';
 
-    $result= $database->query("select * from webuser where email='$email'");
+    $result=$database->query("select * from webuser where email='$email'");
     if($result->num_rows==1){
         $utype=$result->fetch_assoc()['usertype'];
         if ($utype=='p'){
             $checker = $database->query("select * from patient where pemail='$email' and ppassword='$password'");
             if ($checker->num_rows==1){
-
 
                 //   Patient dashbord
                 $_SESSION['user']=$email;
