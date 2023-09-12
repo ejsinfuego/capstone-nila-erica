@@ -1,5 +1,7 @@
 <?php 
 $title = "Medicine Requests";
+$border = "border-left: 3px solid #2E8B57;";
+
 include(__DIR__ . '/../_header_v2.php'); ?>
 <?php 
 
@@ -16,9 +18,9 @@ include(__DIR__ . '/../_header_v2.php'); ?>
             <div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
                 <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
                 <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
-                <h1 style="font-family: Montserrat, sans-serif;padding: 17px;padding-top: 20px;margin-left: 239px;margin-right: -3px;padding-left: 20px;padding-right: 20px;border-radius: 10px;background: #f1f0f0;margin-top: 10px;">Medicine Requests</h1>
+                <h1 class="p-2"style="font-family: Montserrat, sans-serif; text-align: center;">Medicine Requests</h1>
                 </div>
-                    <table class="table">
+                    <table class="table table-hover" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>
@@ -43,4 +45,4 @@ include(__DIR__ . '/../_header_v2.php'); ?>
         </div>
     </div>
 
-<?php include(__DIR__ . '/../_footer.php') ?>x  
+<?php include(__DIR__ . '/../_footer.php') ?>

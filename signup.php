@@ -58,7 +58,7 @@ if($_POST){
 
 ?>
 <body>
-<section class="position-relative py-4 py-xl-5" style="font-family: Montserrat, sans-serif;">
+<section class="d-lg-block py-4 py-xl-5" style="font-family: Montserrat, sans-serif;">
         <section class="py-4 py-xl-5">
             <div class="container h-100">
                 <div class="row h-100">
@@ -80,7 +80,7 @@ if($_POST){
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-8 col-xl-4 col-xxl-5">
+                <div class="col-md-6 col-lg-8 col-xl-4 col-xxl-5 d-sm-flex">
                     <div class="card mb-5" style="width: 532.987px;">
                         <div class="card-body d-flex flex-row justify-content-start flex-nowrap justify-content-lg-start align-items-lg-center" style="width: 508.987px;margin-left: 6px;">
                     <form class="text-center d-flex flex-row flex-wrap justify-content-lg-start align-items-lg-center" method="POST" style="width: 489px;margin-left: 21px;margin-top: 20px;" action="">
@@ -132,15 +132,15 @@ if($_POST){
                                 <label class="form-label d-lg-flex justify-content-lg-start">Date of Birth</label>
                                 <input class="form-control" name="dob" placeholder="date of birth" type="date">
                                 </div>
-                                <div class="mb-3" style="margin-right: 13px;"><label class="form-label d-lg-flex justify-content-lg-start">Father's Name</label>
+                                <div class="mb-3 w-100" style="margin-right: 13px;"><label class="form-label d-flex d-lg-flex justify-content-lg-start">Father's Name</label>
                                 <input class="form-control" type="text" name="father" placeholder="Fathers Name">
                                 </div>
-                                <div class="mb-3">
-                                <label class="form-label d-lg-flex justify-content-lg-start">Mother's Name</label>
+                                <div class="mb-3 w-100">
+                                <label class="form-label d-flex d-lg-flex justify-content-lg-start">Mother's Name</label>
                                 <input class="form-control" type="text" name="mother" placeholder="Mothers Name">
                                 </div>
-                                <div class="mb-3">
-                                <input class="btn btn-primary btn-lg d-block w-100" name="submit" style="background: #1e80c1;margin-left: 0px;" type="submit"></div>
+                                <div class="">
+                                <input class="btn btn-primary btn-md d-flex w-auto" name="submit" style="background: #2E8B57;margin-left: 0px;" type="submit"></div>
                             </form>
                         </div>
                     </div>

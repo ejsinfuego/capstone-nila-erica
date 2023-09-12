@@ -5,6 +5,17 @@ include(__DIR__ . "/../_header_v2.php");
 $appointments = count($database->query("select * from consultation where patient_id = ".$userid)->fetch_all());
 $medicine_requests_count = count($database->query("select * from request_medicine where patient_id = ".$userid)->fetch_all());
 
+
+
+$patientMap = [
+    '/patients/index' => 'index.php',
+    '/patients/book_appointment' => 'patients/book_appointment.php',
+    '/patients/request_medicine' => 'patients/request_medicine.php',
+    '/appointments' => '/patients/appointments.php',
+    '/patients/medicine_requests' => 'patients/medicine_requests.php',
+];
+
+
 ?>
     <div class="container py-4 py-xl-2" style="height: 300.3px;">
         <div class="row mb-5" style="border-radius: 10px;padding: 23px;background: url('../assets/img/IMG_20230814_112809.jpg') center / cover no-repeat, #fbfff1;">
@@ -14,7 +25,7 @@ $medicine_requests_count = count($database->query("select * from request_medicin
                         <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                             <div>
                                 <h2 class="text-uppercase fw-bold mb-3" style="text-shadow: 2px 3px 4px rgb(255,255,255);">Book medical appointment online</h2>
-                                <p class="mb-4" style="text-shadow: 2px 1px 3px rgb(255,255,255);">Reach out to your Rural Health Unit without leaving your doorstep.</p><button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button" style="background: #1e80c1;">Book an Appointment</button>
+                                <p class="mb-4" style="text-shadow: 2px 1px 3px rgb(255,255,255);">Reach out to your Rural Health Unit without leaving your doorstep.</p><a class="btn btn-primary fs-5 me-2 py-2 px-4" href="book_appointment.php" type="button" style="background: #1e80c1;">Book an Appointment</a>
                             </div>
                         </div>
                     </div>

@@ -4,8 +4,8 @@
 
     include('../connection.php');
     //delete all picked appointments
-    if(isset($_POST['appointment_ids'])){
-        $appointment_ids = $_POST['appointment_ids'];
+    if(isset($_GET['appointment_ids'])){
+        $appointment_ids = $_GET['appointment_ids'];
         foreach($appointment_ids as $appointment_id){
             $database->query("DELETE FROM consultation WHERE consultation_id = '$appointment_id'");
         }

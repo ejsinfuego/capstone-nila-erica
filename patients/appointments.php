@@ -2,6 +2,8 @@
 
 $title = 'Appointments';
 
+$border = "border-left: 3px solid #2E8B57;";
+
 include(__DIR__ . '/../_header_v2.php');
 
 
@@ -12,8 +14,8 @@ if($_SESSION['usertype'] != 'p'){
     $appointments = $database->query("select * from consultation where patient_id = $userid");
     $appointments_booked=$appointments->fetch_assoc();
 
-    
 ?>
+
 <script>
 //ajax script to cancel appointment
 function cancel_appointment(id){
@@ -28,8 +30,8 @@ function cancel_appointment(id){
     });
 }
 </script>
-<div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
-    <h1 style="font-family: Montserrat, sans-serif;padding: 17px;padding-top: 20px;margin-left: 150px;margin-right: -3px;padding-left: 20px;padding-right: 20px;border-radius: 10px;background: #f1f0f0;margin-top: 10px;">Appointments Schedule</h1>
+<div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px; border: 2px solid #2E8B57">
+    <h1 style="font-family: Montserrat, sans-serif;padding: 17px;padding-top: 20px;margin-left: 150px;margin-right: -3px;padding-left: 0px;padding-right: 20px;border-radius: 10px;background: #f1f0f0;margin-top: 10px;">Appointments Schedule</h1>
     <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
         <table class="table table-hover">
             <thead>
@@ -61,7 +63,7 @@ function cancel_appointment(id){
                     </td>
                     <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
                     <a href='edit_appointment.php' class='btn btn-primary btn-sm' type='button' style='background: #2ecc71;border-style: none;'>Update</a>
-                    <a href='' onClick='cancel_appointment()' id='cancel' class='danger btn-sm' type='button' style='border-style: none; margin-left: 10px;'>Cancel</a>
+                    <a href='' onClick='cancel_appointment()' id='cancel' class='text-danger' type='button' style='border-style: none; margin-left: 10px;'>Cancel</a>
                     <input type='checkbox' name='appointment_ids[]' value=".$appointment['patient_id']." style='margin-left: 20px;'></td>
                     </td>";
                     echo "</tr>";
