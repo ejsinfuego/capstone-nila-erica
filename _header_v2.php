@@ -1,9 +1,7 @@
 <?php 
-$title = $title ?? 'RHUConnect'; 
-?>
+$title = $title ??'RHUConnect';?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -20,7 +18,6 @@ $title = $title ?? 'RHUConnect';
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
 <script>
     // //fix delete appointment (deadline friday)
 
@@ -53,10 +50,11 @@ $title = $title ?? 'RHUConnect';
             xhttp.send();
     };
 
-
-
   $(document).ready(function() {
     $('#sortTable').DataTable({
+       destroy: true,
+    });
+    $('#patientTable').DataTable({
        destroy: true,
     });
       // Show the modal on button click
@@ -74,11 +72,7 @@ $title = $title ?? 'RHUConnect';
     setTimeout(function() {
       $('#myModal').modal('hide');
     }, 2000);
-
-
   });
-
-    
 </script>
 </head>
 <style>
@@ -109,7 +103,7 @@ session_start();
         $userrow = $database->query("select * from patient where pemail='$useremail'");
         $userfetch=$userrow->fetch_assoc();
         $userid= $userfetch["pid"];
-        $username=$userfetch["pname"];
+        $username=$userfetch["f_name"];
         $med_link = "../patients/request_medicine.php";
         $med_link_sidebar = "../patients/medicine_requests.php";
         $appointment_link = "../patients/book_appointment.php";
@@ -128,6 +122,7 @@ session_start();
         $med_link_sidebar = "../doctors/medicine_requests.php";
         $appointment_link_sidebar = "../doctors/appointments.php";
         $index = "../doctors/index.php";
+        $health_records = "patients.php";
     }
      if(isset($_SESSION['message']) && $_SESSION['message'] !='' && isset($_SESSION['show_modal']) && $_SESSION['show_modal'] !=''){
         $myModal = $_SESSION['show_modal'];
@@ -143,7 +138,7 @@ session_start();
                     <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="<?php echo $appointment_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-hover-animate="jello" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
                     <li class="nav-item" style="color: #fbfff1;"><a class="nav-link" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Consultation</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Monitoring</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Records</a></li>
                 </ul><a href="../logout.php" class="btn btn-primary" data-bss-hover-animate="bounce" type="button" style="font-family: Allerta, sans-serif;color: #fbfff1;border-style: none; background-color: #2E8B57;">Logout</a>
             </div>
             <aside></aside>
@@ -221,7 +216,7 @@ session_start();
                                     </div>
                                 </div>
                             </a>
-                            <a class="nav-link text-center links d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="#" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">
+                            <a class="nav-link text-center links d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="<?php echo $health_records; ?>" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">
                             <div class="d-lg-flex justify-content-center align-items-center align-content-center align-self-center flex-nowrap justify-content-lg-center align-items-lg-center" style="color:#2E8B57;">
                                 <div class="d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center"><svg class="bi bi-clipboard2-heart d-lg-flex align-self-start order-first justify-content-lg-center align-items-lg-center" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;padding: 9px;padding-right: 0px;padding-left: 0px;width: 46px;margin-left: -3px;background: var(--bs-primary-bg-subtle);border-radius: 38px;">
                                         <path d="M10.058.501a.501.501 0 0 0-.5-.501h-2.98c-.276 0-.5.225-.5.501A.499.499 0 0 1 5.582 1a.497.497 0 0 0-.497.497V2a.5.5 0 0 0 .5.5h4.968a.5.5 0 0 0 .5-.5v-.503A.497.497 0 0 0 10.555 1a.499.499 0 0 1-.497-.499Z"></path>
@@ -230,7 +225,7 @@ session_start();
                                     </svg></div>
                                 <div class="d-lg-flex links justify-content-lg-center align-items-lg-center" style="width: 7px;"></div>
                                 <div class="d-lg-flex justify-content-center align-items-center justify-content-lg-start align-items-lg-center" style="padding-bottom: 0px;height: 35.6px;padding-top: 16px;width: 116.8px;">
-                                    <p class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><strong>Health Record</strong></p>
+                                    <p class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><strong>Health Records</strong></p>
                                 </div>
                             </div>
                         </a><a class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">
