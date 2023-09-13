@@ -23,6 +23,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                     <table class="table table-hover" id="sortTable">
                         <thead>
                             <tr>
+                                <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Quantity</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Status</th>
@@ -33,6 +34,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                         foreach($medicinerow as $medicinefetch) {
                             echo "<tr style='border-style: solid;background: rgba(255,255,255,0);'>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['pname']."</td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['med_name']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['quantity']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$medicinefetch['status']."</td>";
                             echo "</tr>";

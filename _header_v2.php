@@ -22,56 +22,65 @@ $title = $title ?? 'RHUConnect';
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
 <script>
-    //fix delete appointment (deadline friday)
+    // //fix delete appointment (deadline friday)
 
-    function deleteAppointment(appointment_ids){
+    function deleteAppointment(appointment_id){
 
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                //gather data from the last column
-                alert(appointment_ids);
-               window.location.reload();
-            }
-        };
-        xhttp.open("GET", "deleteAppointment.php", true);
-        xhttp.send();
+       
+        if(confirm("Sure to delete?") == true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    
+                   window.location.reload();
+                }
+            };
+            xhttp.open("GET", "deleteAppointment.php?appointment_id="+appointment_id, true);
+            xhttp.send();
+        }else{
+        }
+       
     };
 
-    function apporoveAppointment(id){
+    function approveAppointment(appointment_id){
         var xhttp = new XMLHttpRequest();
-        xtthp.onreadystatechange = function() {
-            if (thsis.readyState == 4 && this.status = 200){
-
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200){
+                location.reload();
             }
-    }
-    }
+        };
+            xhttp.open("GET", "approveAppointment.php?appointment_id="+appointment_id, true);
+            xhttp.send();
+    };
 
-    
-</script>
-    
-</head>
 
-<script>
+
   $(document).ready(function() {
     $('#sortTable').DataTable({
        destroy: true,
-    })
-    // Show the modal on button click
-    $('#deleteButton').click(function() {
+    });
+      // Show the modal on button click
+    $('.deleteButton').click(function() {
         $('#deleteModal').modal('show');
+
     });
 
-    $('#closeModal').click(function(){
+    $('.closeModal').click(function(){
         $('#deleteModal').modal('hide');
-    })
+    });
 
+    $('#myModal').modal('show');
     // Automatically close the modal after 2 seconds
     setTimeout(function() {
       $('#myModal').modal('hide');
     }, 2000);
+
+
   });
+
+    
 </script>
+</head>
 <style>
     .links:hover{
     background-color: rgba(46,139,87,0.47) !important;
