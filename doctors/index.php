@@ -42,7 +42,7 @@ include(__DIR__ . '/../_header_v2.php');
                         </svg></div>
                     <div class="px-3">
                         <h2 class="fw-bold mb-0"><?php echo $appointments ?></h2>
-                        <p class="mb-0">Appointments</p>
+                        <p class="mb-0">Pending Appointments</p>
                     </div>
                 </div>
             </div>
@@ -75,8 +75,8 @@ include(__DIR__ . '/../_header_v2.php');
                             <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
                         </svg></div>
                     <div class="px-3">
-                        <h2 class="fw-bold mb-0"><?php echo $appointments; ?></h2>
-                        <p class="mb-0">Medicine Requests</p>
+                        <h2 class="fw-bold mb-0"><?php echo $medicine_requests_count; ?></h2>
+                        <p class="mb-0">Pending Medicine Requests</p>
                     </div>
                 </div>
             </div>

@@ -38,9 +38,11 @@ if($_SESSION['usertype'] != 'd'){
   </div>
 
 
-<div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px; border: 2px solid #2E8B57;">
-    <h1 style="font-family: Montserrat, sans-serif;padding: 17px;padding-top: 20px;margin-left: 145px;margin-right: -3px;padding-left: 20px;padding-right: 20px;border-radius: 10px;background: #f1f0f0;margin-top: 10px;">Appointment Requests</h1>
-    <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
+<div class="py-3 col d-lg-flex flex-column align-items-lg-center justify-content-xxl-center align-items-xxl-center" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px; border: 2px solid #2E8B57;">
+    <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Appointment Requests</h1>
+    <p>List of Patients' Appointments</p>
+    <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
+    <hr style="width: 535px; color: #2E8B57;">
         <table class="table table-bordered table-hover sortTable" id="sortTable">
             <thead>
                 <tr>
@@ -79,11 +81,7 @@ if($_SESSION['usertype'] != 'd'){
                <?php endforeach; ?>
               </tbody>
         </table>
-                     <section class="py-4 py-xl-5" style="font-family: 'Montserrat', sans-serif;">
-                        <div class="container">
-                    <label class="my-2">This will delete all the rows that are checked.</label>
-                </div>
-                </section>
+                
             </div>
         </div>
         </div>

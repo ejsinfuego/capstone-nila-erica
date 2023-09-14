@@ -18,12 +18,11 @@ $title = $title ??'RHUConnect';?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+</head>
 <script>
     // //fix delete appointment (deadline friday)
-
     function deleteAppointment(appointment_id){
-
-       
         if(confirm("Sure to delete?") == true){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
@@ -34,10 +33,23 @@ $title = $title ??'RHUConnect';?>
             };
             xhttp.open("GET", "deleteAppointment.php?appointment_id="+appointment_id, true);
             xhttp.send();
-        }else{
         }
        
     };
+        
+    function deleteMedicineRequest(request_medicine_id){
+        if(confirm("Sure to delete?") == true){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+                }
+            };
+            xhttp.open("GET", "deleteMedicineRequest.php?request_medicine_id="+request_medicine_id, true);
+            xhttp.send();
+        }
+
+        };
 
     function approveAppointment(appointment_id){
         var xhttp = new XMLHttpRequest();
@@ -50,12 +62,21 @@ $title = $title ??'RHUConnect';?>
             xhttp.send();
     };
 
+    function approveMedicineRequest(request_medicine_id){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200){
+                location.reload();
+            }
+        };
+            xhttp.open("GET", "approveMedicineRequest?request_medicine_id="+request_medicine_id, true);
+            xhttp.send();
+    };
+
   $(document).ready(function() {
     $('#sortTable').DataTable({
        destroy: true,
-    });
-    $('#patientTable').DataTable({
-       destroy: true,
+       responsive: true,
     });
       // Show the modal on button click
     $('.deleteButton').click(function() {
@@ -74,7 +95,6 @@ $title = $title ??'RHUConnect';?>
     }, 2000);
   });
 </script>
-</head>
 <style>
     .links:hover{
     background-color: rgba(46,139,87,0.47) !important;
@@ -109,6 +129,7 @@ session_start();
         $appointment_link = "../patients/book_appointment.php";
         $appointment_link_sidebar = "../patients/appointments.php";
         $index = "../patients/index.php";
+        $health_records = "Health_monitor.php";
 
     }else{
         //import database
@@ -216,7 +237,7 @@ session_start();
                                     </div>
                                 </div>
                             </a>
-                            <a class="nav-link text-center links d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="<?php echo $health_records; ?>" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">
+                            <a style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px; <?php echo($title == 'Health Monitor' || $title == 'Health Records') ? $border : ''; ?>" class="nav-link text-center links d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="<?php echo $health_records; ?>" >
                             <div class="d-lg-flex justify-content-center align-items-center align-content-center align-self-center flex-nowrap justify-content-lg-center align-items-lg-center" style="color:#2E8B57;">
                                 <div class="d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center"><svg class="bi bi-clipboard2-heart d-lg-flex align-self-start order-first justify-content-lg-center align-items-lg-center" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="font-size: 46px;padding: 9px;padding-right: 0px;padding-left: 0px;width: 46px;margin-left: -3px;background: var(--bs-primary-bg-subtle);border-radius: 38px;">
                                         <path d="M10.058.501a.501.501 0 0 0-.5-.501h-2.98c-.276 0-.5.225-.5.501A.499.499 0 0 1 5.582 1a.497.497 0 0 0-.497.497V2a.5.5 0 0 0 .5.5h4.968a.5.5 0 0 0 .5-.5v-.503A.497.497 0 0 0 10.555 1a.499.499 0 0 1-.497-.499Z"></path>
@@ -228,7 +249,7 @@ session_start();
                                     <p class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><strong>Health Records</strong></p>
                                 </div>
                             </div>
-                        </a><a class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">
+                        </a><a style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px; <?php echo($title == 'Prescriptions' || $title == 'Edit Prescription') ? $border : ''; ?>" class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar links" href="prescription.php" >
                                 <div class="d-lg-flex justify-content-center align-items-center align-content-center align-self-center flex-nowrap justify-content-lg-center align-items-lg-center" style="color:#2E8B57;">
                                     <div class="d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule d-lg-flex align-self-start order-first justify-content-lg-center align-items-lg-center" style="font-size: 46px;padding: 9px;padding-right: 0px;padding-left: 0px;width: 46px;margin-left: -3px;background: var(--bs-primary-bg-subtle);border-radius: 38px;">
                                             <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
@@ -242,12 +263,12 @@ session_start();
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
                     </ul>
-                <?php if($_SESSION['usertype'] == 'p') : ?>
+                <?php if($_SESSION['usertype'] == 'p' || $_SESSION['usertype'] == 'd') : ?>
                         <hr class="d-lg-flex align-items-center align-self-center justify-content-lg-center align-items-lg-center" style="width: 212px;">
                         <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;"><a class="d-lg-flex justify-content-lg-center" href="<?php echo $med_link; ?>" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
                         <strong>
-                            <span style="color: #2E8B57;">Request medicine here..</span></strong></a>
-                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo $appointment_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;">Book an appointment here...</span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
+                            <span style="color: #2E8B57;">Request Medicine Here</span></strong></a>
+                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo ($_SESSION['usertype']=='d')? 'add_prescription.php': $appointment_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;"><?php echo($_SESSION['usertype'] == 'd') ? 'Add Prescription Here' : 'Book an appointment here...'; ?></span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
             <?php endif; ?>
                 </div>
 <?php endif; ?>

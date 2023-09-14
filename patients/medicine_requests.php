@@ -18,7 +18,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
             <div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
             <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
                 <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
-                <h1 class="p-2"style="font-family: Montserrat, sans-serif; text-align: center;">Medicine Requests</h1>
+                <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Medicine Requests</h1>
                 </div>
                     <table class="table">
                         <thead>

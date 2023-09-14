@@ -13,34 +13,7 @@ include(__DIR__ . '/../_header_v2.php');
     $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.request_medicine_id, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id;
     ");
 ?>
-<script>
-        
-        function deleteMedicineRequest(request_medicine_id){
-        if(confirm("Sure to delete?") == true){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    window.location.reload();
-                }
-            };
-            xhttp.open("GET", "deleteMedicineRequest.php?request_medicine_id="+request_medicine_id, true);
-            xhttp.send();
-        }else{
-        }
-        };
 
-    function approveMedicineRequest(request_medicine_id){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200){
-                window.location.reload();
-            }
-        };
-            xhttp.open("GET", "approveMedicineRequest.php?request_medicine_id="+request_medicine_id, true);
-            xhttp.send();
-    };
-
-</script>
             <div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
                 <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
                 <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
@@ -68,7 +41,7 @@ include(__DIR__ . '/../_header_v2.php');
                                         <div class="">
                                             <?php if ($medicinefetch['status'] == 'pending'): ?>
                                             <small>
-                                            <button class="btn btn-primary" onclick="approveAppointment(<?php echo $medicinefetch['request_medicine_id']; ?>)" style="background: transparent;font-family: Montserrat, sans-serif;color: #1e80c1;border: 1px solid #1e80c1;">Approve</button></small>
+                                            <button class="btn btn-primary" onclick="approveMedicineRequest(<?php echo $medicinefetch['request_medicine_id']; ?>)" style="background: transparent;font-family: Montserrat, sans-serif;color: #1e80c1;border: 1px solid #1e80c1;">Approve</button></small>
                                             <?php endif; ?>
                                             <input id="request_medicine" name="request_medicine_id" type="hidden" value="<?php echo $medicinefetch['request_medicine_id']; ?>">
                                             <button id="deleteButton" onclick="deleteMedicineRequest(<?php echo $medicinefetch['request_medicine_id']; ?>)" class="btn btn-sm danger ms-sm-2" ><svg class="bi bi-trash3-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="white" viewBox="0 0 16 16">
@@ -85,5 +58,4 @@ include(__DIR__ . '/../_header_v2.php');
             </div>
         </div>
     </div>
-
 <?php include(__DIR__ . '/../_footer.php') ?>

@@ -1,5 +1,7 @@
 <?php 
-$title= 'Prescription';
+$title= 'Prescriptions';
+$border = "border-left: 3px solid #2E8B57;";
+
 include(__DIR__ . '/../_header_v2.php');
 
 if( $_SESSION['usertype'] != 'p'){
@@ -7,12 +9,11 @@ if( $_SESSION['usertype'] != 'p'){
 }
 $prescriptions = $database->query("select * from prescription where patient_id = ".$userid);
 ?>
-            <div class="col" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;">
-                <div class="table-responsive" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
-                <h1 style="font-family: Montserrat, sans-serif;padding: 17px;padding-top: 20px;margin-left: 239px;margin-right: -3px;padding-left: 20px;padding-right: 20px;border-radius: 10px;background: #f1f0f0;margin-top: 10px;">Prescriptions</h1>
-                </div>
-                    <table class="table">
+<div class="col py-lg-4 d-lg-flex flex-column align-items-lg-center" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px; border: 2px solid #2E8B57;">
+                <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center; font-weight: bold;text-shadow: 2px 2px #abb2b9;">Prescriptions</h1>
+                <p>List your Prescriptions</p>
+                <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
+                    <table class="table" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Prescription ID</th>

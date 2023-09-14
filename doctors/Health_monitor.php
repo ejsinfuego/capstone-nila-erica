@@ -1,8 +1,15 @@
-<?php include(__DIR__ . '/../_header_v2.php'); 
+<?php 
 $title = "Health Monitor";
+$border = "border-left: 3px solid #2E8B57;";
+include(__DIR__ . '/../_header_v2.php'); 
+
 
 if(isset($_GET['pid'])){
-    $patients = $database->query('select * from patient where pid='.$_GET['pid']);
+    $patients = $database->query('select patient.pid, patient.f_name, patient.l_name, health_monitoring.weight, health_monitoring.height, health_monitoring.blood_pressure, health_monitoring.patient_pid, health_monitoring.note from health_monitoring inner join patient on health_monitoring.patient_pid = patient.pid where pid='.$_GET['pid']);
+    if($patients->num_rows==0){
+        $patients = $database->query('select * from patient where pid='.$_GET['pid']);
+    }
+
     $patients = $patients->fetch_assoc();
 
 }
@@ -13,15 +20,27 @@ if(isset($_GET['pid'])){
                 <hr style="width: 535px;margin-top: 0px;color: #1e80c1;">
                 <div class="card mb-5" style="width: auto;">
                     <div class="card-body d-flex flex-row flex-nowrap justify-content-lg-start align-items-lg-center" style="width: auto;margin-left: 6px;">
-                        <form class="text-center d-flex flex-row flex-wrap justify-content-lg-start align-items-lg-center ms-2" method="post" style="width: 489px;margin-left: 0px;margin-top: 20px;">
-                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">First Name</label><input class="form-control" type="email" name="email" placeholder="<?php echo $patients['f_name']; ?>"></div>
-                            <div class="mb-3"><label class="form-label d-lg-flex justify-content-lg-start">Last Name</label><input class="form-control" type="text" name="lastname" placeholder="<?php echo $patients['l_name']; ?>"></div>
-                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label text-center d-lg-flex justify-content-lg-start">Weight</label><input class="form-control" type="text" name="address" placeholder="Province"></div>
-                            <div class="mb-3"><label class="form-label d-lg-flex justify-content-lg-start">Height</label><input class="form-control" type="text" name="address" placeholder="Town"></div>
-                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">Blood Pressure</label><input class="form-control" type="text" name="address" placeholder="Blood Pressure"></div>
-                            <div class="mb-3"><label class="form-label d-lg-flex justify-content-lg-start">Temperature</label><input class="form-control" type="text" name="address" placeholder="Temperature"></div>
-                            <div class="mb-3" style="width: 100%;"><label class="form-label d-lg-flex justify-content-lg-start">Note</label><input class="form-control form-control-lg" type="text" name="mothersName" placeholder="Note"></div>
-                            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: #1e80c1;margin-left: 0px;">Edit</button></div>
+                        <form method="post" action="editHealthRecords.php" style="width: 489px;margin-left: 0px;margin-top: 20px;" class="text-center d-flex flex-row flex-wrap justify-content-lg-start align-items-lg-center ms-2" >
+                            <input class="form-control" type="hidden" name="patient_id" value="<?php echo $patients['pid']; ?>"/>
+                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">First Name</label>
+                            
+                            <input class="form-control" type="text" name="first_name" placeholder="<?php echo $patients['f_name']; ?>">
+                            </div>
+                            <div class="mb-3"><label class="form-label d-lg-flex justify-content-lg-start">Last Name</label>
+                            <input class="form-control" type="text" name="lastname" placeholder="<?php echo $patients['l_name']; ?>">
+                            </div>
+                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label text-center d-lg-flex justify-content-lg-start">Weight</label>
+                            <input class="form-control" type="text" name="weight" placeholder="<?php echo (isset($patients['weight'])) ?$patients['weight'] : "";?>"></div>
+                            <div class="mb-3"><label class="form-label d-lg-flex justify-content-lg-start">Height</label>
+                            <input class="form-control" type="text" name="height" placeholder="<?php echo (isset($patients['height'])) ?$patients['height'] : "";?>"></div>
+                            <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">Blood Pressure</label>
+                            <input class="form-control" type="text" name="bp" placeholder="<?php echo (isset($patients['blood_pressure'])) ?$patients['blood_pressure'] : "";?>">
+                            </div>
+                            <div class="mb-3" style="width: 100%;"><label class="form-label d-lg-flex justify-content-lg-start">Note</label>
+                            <textarea class="form-control form-control-lg" type="text" name="note" placeholder="<?php echo (isset($patients['note'])) ?$patients['note'] : "";?>"></textarea>
+                            </div>
+                            <div class="mb-3"><button class="btn btn-primary d-block w-100" name="submit" type="submit" style="background: #1e80c1;margin-left: 0px;">Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>
