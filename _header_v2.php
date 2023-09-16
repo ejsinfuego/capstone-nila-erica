@@ -20,6 +20,13 @@ $title = $title ??'RHUConnect';?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
 </head>
+<style>
+    .links:hover{
+    background-color: rgba(46,139,87,0.47) !important;
+    color: #fff!important;
+    box-shadow: none!important;
+}
+</style>
 <script>
     // //fix delete appointment (deadline friday)
     function deleteAppointment(appointment_id){
@@ -50,7 +57,7 @@ $title = $title ??'RHUConnect';?>
         }
 
         };
-
+        
     function approveAppointment(appointment_id){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -61,22 +68,22 @@ $title = $title ??'RHUConnect';?>
             xhttp.open("GET", "approveAppointment.php?appointment_id="+appointment_id, true);
             xhttp.send();
     };
-
-    function approveMedicineRequest(request_medicine_id){
+    function deletePrescription(prescription_id){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200){
                 location.reload();
             }
         };
-            xhttp.open("GET", "approveMedicineRequest?request_medicine_id="+request_medicine_id, true);
+            xhttp.open("GET", "deletePrescription.php?prescription_id="+prescription_id, true);
             xhttp.send();
     };
-
+    
   $(document).ready(function() {
     $('#sortTable').DataTable({
        destroy: true,
        responsive: true,
+       select: true,
     });
       // Show the modal on button click
     $('.deleteButton').click(function() {
@@ -85,7 +92,7 @@ $title = $title ??'RHUConnect';?>
     });
 
     $('.closeModal').click(function(){
-        $('#deleteModal').modal('hide');
+        $('.modal').modal('hide');
     });
 
     $('#myModal').modal('show');
@@ -95,21 +102,13 @@ $title = $title ??'RHUConnect';?>
     }, 2000);
   });
 </script>
-<style>
-    .links:hover{
-    background-color: rgba(46,139,87,0.47) !important;
-    color: #fff!important;
-    box-shadow: none!important;
-}
-</style>
-
 <?php 
 
 session_start();
 
     if(isset($_SESSION["user"])){
         //check if the user is logged in and if the user is a patient or doctor
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p' and $_SESSION['usertype']!='d'){
+        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='p' and $_SESSION['usertype']!='d' and $_SESSION['usertype']!='a' and $_SESSION['usertype']!='ph' and $_SESSION['usertype']!='do'){
             header("location: ../login_v2.php");
         }else{
             $useremail=$_SESSION["user"];
@@ -134,10 +133,22 @@ session_start();
     }else{
         //import database
         include("connection.php");
-        $userrow = $database->query("select * from doctor where docemail='$useremail'");
-        $userfetch=$userrow->fetch_assoc();
-        $userid= $userfetch["docid"];
-        $username=$userfetch["docname"];
+        if($_SESSION['usertype']=='d'){
+            $userrow = $database->query("select * from doctor where docemail='$useremail'");
+            $userfetch=$userrow->fetch_assoc();
+            $userid= $userfetch["docid"];
+            $username=$userfetch["docname"];
+        }elseif($_SESSION['usertype']=='do'){
+            $userrow = $database->query("select * from desk_officer where email='$useremail'");
+            $userfetch=$userrow->fetch_assoc();
+            $userid= $userfetch["id"];
+            $username=$userfetch["f_name"].' '.$userfetch['l_name'];
+        }elseif($_SESSION['usertype'] == 'ph'){
+            $userrow = $database->query("select * from pharmacist where email='$useremail'");
+            $userfetch=$userrow->fetch_assoc();
+            $userid= $userfetch["id"];
+            $username=$userfetch["f_name"].' '.$userfetch['l_name'];
+        }
         $med_link = "../doctors/medicine_inventory.php";
         $appointment_link = "../doctors/appointments.php";
         $med_link_sidebar = "../doctors/medicine_requests.php";
@@ -145,10 +156,21 @@ session_start();
         $index = "../doctors/index.php";
         $health_records = "patients.php";
     }
+
+    if($_SESSION['usertype']=='ph'){
+        $first_side_link = "medicine_inventory.php";
+        $second_side_link = "add_prescription.php";
+    }elseif($_SESSION['usertype']=='p'){
+        $first_side_link = "request_medicine.php";
+        $second_side_link = "book_appointment.php";
+    }elseif($_SESSION['usertype'] == 'do'){
+        $first_side_link = "appointments.php";
+    }
      if(isset($_SESSION['message']) && $_SESSION['message'] !='' && isset($_SESSION['show_modal']) && $_SESSION['show_modal'] !=''){
         $myModal = $_SESSION['show_modal'];
         unset($_SESSION['show_modal']);
     }
+
     $check_patients = "";
     ?>
 <body style="font-family: Montserrat, sans-serif;background: url(&quot;../assets/img/bg.jpg.png&quot;), #fbfff1;">
@@ -160,7 +182,11 @@ session_start();
                     <li class="nav-item"><a class="nav-link" data-bss-hover-animate="jello" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
                     <li class="nav-item" style="color: #fbfff1;"><a class="nav-link" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Consultation</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Records</a></li>
-                </ul><a href="../logout.php" class="btn btn-primary" data-bss-hover-animate="bounce" type="button" style="font-family: Allerta, sans-serif;color: #fbfff1;border-style: none; background-color: #2E8B57;">Logout</a>
+                </ul>
+                <div class="justify-content-center me-3">
+                    <strong><?php echo $username; ?></strong>
+                </div>
+                <a href="../logout.php" class="btn btn-primary" data-bss-hover-animate="bounce" type="button" style="font-family: Montserrat, sans-serif;color: #fbfff1;border-style: none; background-color: #2E8B57;">Logout</a>
             </div>
             <aside></aside>
         </div>
@@ -184,12 +210,11 @@ session_start();
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="closeModal btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
-    <div class="container"></div>
     <?php if($title == "Index") : ?>
         <div class="container" style="margin-top: 45px;"></div>
         <?php if($_SESSION['usertype'] == 'd') { 
@@ -209,7 +234,7 @@ session_start();
         <div class="container text-start" style="padding-bottom: 9px;padding-top: 16px;"></div>
         <div class="container">
             <div class="row gx-2">
-                <div class="col-md-8 col-lg-1 col-xl-3 col-xxl-2 offset-xl-0 d-sm-flex d-lg-flex flex-column flex-nowrap align-items-sm-center justify-content-lg-start justify-content-xl-start" style="background: transparent;border-radius: 23px;width: auto;height: auto;">
+                <div class="col-md-8 col-lg-1 col-xl-3 col-xxl-2 offset-xl-0 d-sm-flex d-lg-flex flex-column flex-nowrap align-items-sm-center justify-content-lg-start justify-content-xl-start" id="sidebar" style="background: transparent;border-radius: 23px;width: auto;height: auto;">
                     <ul class="nav nav-tabs d-flex d-lg-flex justify-content-center justify-content-lg-center align-items-lg-start" style="border-radius: 10px;background: #f1f0f0;height: auto;width: auto;">
                         <li class="nav-item d-lg-flex flex-column justify-content-lg-center align-items-lg-center" style="width: auto;height: auto;padding: 20px;border-radius: 10px;border: 1px solid #2E8B57;">
                         <a style="font-size: 0.7rem; padding: 7px 5px 7px 10px; <?php echo($title == 'Medicine Requests') ? $border : ''; ?>" class=" nav-link nav-sidebar text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center links align-items-xxl-center" href="<?php echo $med_link_sidebar; ?>">
@@ -260,15 +285,18 @@ session_start();
                                     </div>
                                 </div>
                             </a></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
                     </ul>
-                <?php if($_SESSION['usertype'] == 'p' || $_SESSION['usertype'] == 'd') : ?>
-                        <hr class="d-lg-flex align-items-center align-self-center justify-content-lg-center align-items-lg-center" style="width: 212px;">
-                        <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;"><a class="d-lg-flex justify-content-lg-center" href="<?php echo $med_link; ?>" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
+                        <hr class="d-lg-flex align-items-center align-self-center justify-content-lg-center align-items-lg-center" style="width: 212px; color: #212529; border-top: 2px solid #2E8B57;">
+                        <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;"><a class="d-lg-flex justify-content-lg-center" href="<?php echo $first_side_link; ?>" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
                         <strong>
-                            <span style="color: #2E8B57;">Request Medicine Here</span></strong></a>
-                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo ($_SESSION['usertype']=='d')? 'add_prescription.php': $appointment_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;"><?php echo($_SESSION['usertype'] == 'd') ? 'Add Prescription Here' : 'Book an appointment here...'; ?></span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
-            <?php endif; ?>
+                            <span style="color: #2E8B57;"><?php if($_SESSION['usertype']=='p'){
+                                echo "Request Medicine Here";
+                            }elseif($_SESSION['usertype']=='ph'){
+                                echo "Medicine Inventory";
+                            }elseif($_SESSION['usertype']=='do'){
+                                $pending_appointment = $database->query("select * from consultation where stat='pending'")->fetch_all();
+                                echo count($pending_appointment)." Pending Appointments";
+                            }?></span></strong></a>
+                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo $second_side_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;"><?php echo($_SESSION['usertype'] == 'd'|| $_SESSION['usertype']=='ph') ? 'Add Prescription Here' : 'Book an appointment here...'; ?></span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
                 </div>
 <?php endif; ?>

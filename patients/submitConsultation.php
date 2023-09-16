@@ -24,13 +24,13 @@ $timeNow = Carbon::now('Asia/Kolkata');
         if($search->num_rows==0){
             $database->query("insert into consultation(type, time, date, patient_id, stat, created_at, updated_at) values('$type','$time','$date','$pid','$stat','$timestamp','$timestamp')");
             $_SESSION['message']="Consultation Request Sent!";
-            header("location: book_appointment.php");
+            $_SESSION['show_modal'] = "myModal";
+            header("location: appointments.php");
         }else{
             $_SESSION['message']="Time and Date already taken!";
-            header("location: book_appointment.php");
+            header("location: appointments.php");
         }
 
      }
        
-
 ?>

@@ -18,8 +18,10 @@ $today = date("Y-m-d");
                     <input class="form-control w-25" min="9:000" max="18:00" name="time" type="time">
                     <label class="form-label" style="margin-left: 8px;margin-top: 9px;margin-bottom: -1px;">Note</label><textarea name="note" class="form-control"></textarea>
                     <input class="form-control" name="patient_id" value="<?php echo $userid; ?>" type="hidden">
-                    <input name="submit" type="submit" value="submit" style="margin-top: 18px;margin-bottom: 18px;background: #3d52d5;padding-top: 0px;padding-bottom: 0px;height: 49px;" class="btn btn-lg btn-primary py-md-0 my-md-0 my-sm-0 py-sm-5 my-lg-4 px-lg-3 py-lg-0" >
+                    <input name="submit" type="submit" value="Submit" style="margin-top: 18px;margin-bottom: 18px;background: #2E8B57;" class="btn btn-sm btn-primary" >
                 </form>
+                <div>
+                    <strong style="font-family: Montserrat, sans-serif;">Note: Please wait for the confirmation.</strong>
             </div>
         </div>
     </div>

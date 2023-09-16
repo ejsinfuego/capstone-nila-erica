@@ -10,7 +10,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
 
     //get available medicine list from database
     //sql command which gets the med name and patient name in using request_medicine table using inner join
-    $medicinerow = $database->query("select patient.pname, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where request_medicine.status ='pending' and patient_id = $userid;
+    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where request_medicine.status ='pending' and patient_id = $userid;
     ");
     $medicinefetch=$medicinerow->fetch_assoc();
     
@@ -20,7 +20,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
                 <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Medicine Requests</h1>
                 </div>
-                    <table class="table">
+                    <table class="table table-sm" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>

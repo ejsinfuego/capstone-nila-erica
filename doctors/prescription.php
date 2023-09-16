@@ -10,7 +10,7 @@ $prescriptions = $database->query('select patient.f_name, patient.l_name, prescr
     <p>List of Patients' Prescriptions</p>
     <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
     <hr style="width: 535px; color: #2E8B57;">
-        <table class="table table-bordered table-hover sortTable" id="sortTable">
+        <table class="table table-sm table-hover" id="sortTable">
             <thead>
                 <tr>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
@@ -32,13 +32,14 @@ $prescriptions = $database->query('select patient.f_name, patient.l_name, prescr
                         <div class="">
                           <?php if ($prescription['status'] == 'pending'): ?>
                           <small>
-                            <button class="btn btn-primary" onclick="approveAppointment(<?php echo $appointment['consultation_id']; ?>)" style="background: transparent;font-family: Montserrat, sans-serif;color: #1e80c1;border: 1px solid #1e80c1;">Approve</button></small>
+                            <button class="btn btn-primary" onclick="approveAppointment(<?php echo $prescription['prescription_id']; ?>)" style="background: transparent;font-family: Montserrat, sans-serif;color: #1e80c1;border: 1px solid #1e80c1;">Approve</button></small>
                             <?php endif; ?>
-                            <input id="appointment" name="appointment_id" type="hidden" value="<?php echo $appointment['consultation_id']; ?>">
-                            <button id="deleteButton" onclick="deleteAppointment(<?php echo $appointment['consultation_id']; ?>)" class="btn btn-sm danger ms-sm-2" ><svg class="bi bi-trash3-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="white" viewBox="0 0 16 16">
+                            <input id="prescription" name="prescription_id" type="hidden" value="<?php echo $prescription['prescription_id']; ?>">
+                            <?php if ($_SESSION['usertype']=='ph') : ?>
+                            <button id="deleteButton" onclick="deletePrescription(<?php echo $prescription['prescription_id']; ?>)" class="btn btn-sm danger ms-sm-2" ><svg class="bi bi-trash3-fill" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="white" viewBox="0 0 16 16">
                                 <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"></path></svg>
                             </button>
-             
+                            <?php endif; ?>
                         </div>
                       </form>
                     </td>

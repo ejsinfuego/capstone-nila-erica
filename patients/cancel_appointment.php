@@ -1,10 +1,12 @@
 <?php
 
+session_start();
+include('../connection.php');
 //cancel appointment
-if(isset($_POST['appointment_ids'])){
-    $appointment_ids = $_POST['appointment_ids'];
-    foreach($appointment_ids as $appointment_id){
-        $database->query("update consultation set stat = 'cancelled' where id = $appointment_id");
+if(isset($_GET['appointment_id'])){
+        $appointment_id = $_GET['appointment_id'];
+        $database->query("update consultation set stat = 'cancelled' where consultation_id = $appointment_id");
+        $_SESSION['message'] = "Appointment(s) cancelled.";
+        $_SESSION['show_modal'] = "myModal";
+        header('location: appointments.php'); 
     }
-    echo "Appointment(s) cancelled successfully";
-}

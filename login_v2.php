@@ -39,7 +39,8 @@ if($_POST){
 
     $email=$_POST['useremail'];
     $password=$_POST['userpassword'];
-    
+    $utype = ['utype'];
+
     $error='<label for="promter" class="form-label"></label>';
 
     $result=$database->query("select * from webuser where email='$email'");
@@ -88,7 +89,32 @@ if($_POST){
                 $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
             }
 
+        }elseif($utype=='ph'){
+            $checker = $database->query("select * from pharmacist where email='$email' and password='$password'");
+            if ($checker->num_rows==1){
+
+                //   doctor dashbord
+                $_SESSION['user']=$email;
+                $_SESSION['usertype']='ph';
+                header('location: ./doctors/index.php');
+
+            }else{
+                $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+            }
+
+        }elseif($utype=='do'){
+            $checker = $database->query("select * from desk_officer where email='$email' and password='$password'");
+            if ($checker->num_rows==1){
+                //   desk_officer
+                $_SESSION['user']=$email;
+                $_SESSION['usertype']='do';
+                header('location: ./doctors/index.php');
+
+            }else{
+                $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+            }
         }
+        
         
     }else{
         $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">We cant found any acount for this email.</label>';
@@ -99,10 +125,7 @@ if($_POST){
     $error='<label for="promter" class="form-label">&nbsp;</label>';
 }
 
-?>
-
-
-<body>
+?><body>
     <section class="position-relative py-4 py-xl-5" style="font-family: Montserrat, sans-serif;">
         <section class="py-4 py-xl-5">
             <div class="container h-100">
@@ -133,8 +156,20 @@ if($_POST){
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"></path>
                                 </svg></div>
                             <form class="text-center" method="POST" action="login_v2.php">
-                                <div class="mb-3"><input class="form-control" type="email" name="useremail" placeholder="Email"></div>
-                                <div class="mb-3"><input class="form-control" type="password" name="userpassword" placeholder="Password"></div>
+                            <div class="mb-3">
+                                <label>Log in as</label>
+                                    <select class="form-control" type="email" name="utype" placeholder="Usertype">
+                                        <option value="p">Patient</option>
+                                        <option value="d">Doctor</option>
+                                        <option value="a">Admin</option>
+                                        <option value="ph">Pharmacist</option>
+                                        <option value="do">Front Desk</option>
+                                    </select>
+                            </div>
+                                <div class="mb-3">
+                                    <input class="form-control" type="email" name="useremail" placeholder="Email"></div>
+                                <div class="mb-3">
+                                    <input class="form-control" type="password" name="userpassword" placeholder="Password"></div>
                                 <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: #2E8B57;">Login</button></div>
                             </form>
                             <div class="mb-3"><a class="btn btn-primary d-block w-100" href="signup.php" style="background: #2E8B57;">Sign Up</a></div>

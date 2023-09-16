@@ -4,7 +4,7 @@ $border = "border-left: 3px solid #2E8B57;";
 
 include(__DIR__ . '/../_header_v2.php'); 
 
-if($_SESSION['usertype'] != 'd'){
+if($_SESSION['usertype'] == 'p'){
     header('location: ../unauthorized.php');
 }
     //get available medicine list from database
@@ -17,7 +17,7 @@ if($_SESSION['usertype'] != 'd'){
     }
 
 ?>
-<div class="py-3 col-lg-8 col-xxl-9 d-lg-flex d-xxl-flex flex-column align-items-lg-center justify-content-xxl-center align-items-xxl-center ms-0" style="background: rgba(241,240,240,0.6);font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;height: auto;border: 1px solid rgba(30,128,193,0.52);">
+<div class="py-3 col-lg-8 col-xxl-9 d-lg-flex d-xxl-flex flex-column align-items-lg-center justify-content-xxl-center align-items-xxl-center ms-0" style="background: rgba(241,240,240,0.6);font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;height: auto;border: 2px solid #2E8B57;">
     <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Patients</h1>
         <p>List of Patient's Information</p>
         <small>Click the name of patient for more information.</small>
