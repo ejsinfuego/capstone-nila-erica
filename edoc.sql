@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 06:28 AM
+-- Generation Time: Sep 16, 2023 at 08:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -54,11 +54,38 @@ CREATE TABLE `consultation` (
 --
 
 INSERT INTO `consultation` (`consultation_id`, `patient_id`, `stat`, `type`, `date`, `time`, `created_at`, `updated_at`) VALUES
-(16, 24, 'pending', 'xray', '2023-08-30', '03:44:00', '2023-08-24 21:14:46', '2023-08-24 21:14:46'),
-(18, 25, 'pending', 'urinalysis', '2023-08-29', '09:30:00', '2023-08-25 08:14:43', '2023-08-25 08:14:43'),
-(19, 25, 'pending', 'xray', '2023-09-08', '13:47:00', '2023-08-25 08:17:13', '2023-08-25 08:17:13'),
-(20, 25, 'pending', 'xray', '2023-08-29', '01:48:00', '2023-08-25 08:18:53', '2023-08-25 08:18:53'),
-(24, 25, 'pending', 'xray', '2023-08-31', '04:02:00', '2023-08-29 09:32:34', '2023-08-29 09:32:34');
+(91, 25, 'approved', 'urinalysis', '2023-09-20', '15:19:00', '2023-09-14 09:49:21', '2023-09-14 09:49:21'),
+(95, 22, 'cancelled', 'urinalysis', '2023-09-28', '14:21:00', '2023-09-14 09:51:08', '2023-09-14 09:51:08'),
+(96, 22, 'cancelled', 'urinalysis', '2023-09-17', '04:21:00', '2023-09-14 09:51:16', '2023-09-14 09:51:16'),
+(97, 24, 'approved', 'xray', '2023-09-24', '15:22:00', '2023-09-14 09:52:18', '2023-09-14 09:52:18'),
+(98, 24, 'approved', 'xray', '2023-09-25', '12:25:00', '2023-09-14 09:52:27', '2023-09-14 09:52:27'),
+(99, 24, 'approved', 'xray', '2023-09-18', '00:26:00', '2023-09-14 09:52:42', '2023-09-14 09:52:42'),
+(100, 24, 'pending', 'consultation', '2023-09-26', '11:59:00', '2023-09-15 07:29:36', '2023-09-15 07:29:36'),
+(101, 25, 'pending', 'xray', '2023-09-20', '11:07:00', '2023-09-15 21:38:11', '2023-09-15 21:38:11'),
+(102, 22, 'cancelled', 'xray', '2023-09-27', '15:17:00', '2023-09-16 18:47:49', '2023-09-16 18:47:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `desk_officer`
+--
+
+CREATE TABLE `desk_officer` (
+  `id` int(11) NOT NULL,
+  `f_name` varchar(50) NOT NULL,
+  `l_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(16) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `desk_officer`
+--
+
+INSERT INTO `desk_officer` (`id`, `f_name`, `l_name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'Desk ', 'Officer', 'desk@mail.com', '123', '2023-09-15 08:20:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -91,16 +118,26 @@ INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `
 
 CREATE TABLE `health_monitoring` (
   `health_monitoring_id` int(11) NOT NULL,
+  `patient_pid` int(11) NOT NULL,
   `weight` float NOT NULL,
   `height` float NOT NULL,
   `blood_pressure` varchar(10) NOT NULL,
   `note` text NOT NULL,
   `created_at` datetime NOT NULL,
-  `udpated_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   `doctor_id` int(11) DEFAULT NULL,
-  `status` varchar(10) NOT NULL,
-  `patient_pid` int(11) NOT NULL
+  `status` varchar(10) NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `health_monitoring`
+--
+
+INSERT INTO `health_monitoring` (`health_monitoring_id`, `patient_pid`, `weight`, `height`, `blood_pressure`, `note`, `created_at`, `updated_at`, `doctor_id`, `status`) VALUES
+(7, 22, 40, 165, '100/72', 'ok', '2023-09-14 10:23:50', '2023-09-14 10:23:50', NULL, 'active'),
+(8, 25, 55, 165, '145/55', 'Healthy', '2023-09-14 10:33:50', '2023-09-14 10:33:50', NULL, 'active'),
+(9, 23, 60, 165, '180/65', 'very healthy', '2023-09-14 10:35:09', '2023-09-16 10:00:53', NULL, 'active'),
+(10, 24, 50, 154, '165/55', 'need check up', '2023-09-14 10:35:57', '2023-09-14 10:35:57', NULL, 'active');
 
 -- --------------------------------------------------------
 
@@ -112,16 +149,18 @@ CREATE TABLE `medicine_inventory` (
   `medicine_id` int(11) NOT NULL,
   `med_name` varchar(50) NOT NULL,
   `med_qty` int(50) NOT NULL,
-  `status` varchar(50) NOT NULL
+  `status` varchar(50) NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `medicine_inventory`
 --
 
-INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_qty`, `status`) VALUES
-(3, 'Mefenamic', 697, 'high'),
-(4, 'Amoxicillin', 4898, 'good');
+INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_qty`, `status`, `updated_at`, `created_at`) VALUES
+(3, 'Mefenamic', 713, 'high', '2023-09-16 23:01:05', NULL),
+(4, 'Amoxicillin', 4742, 'good', '2023-09-16 22:46:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -132,7 +171,9 @@ INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_qty`, `status`
 CREATE TABLE `patient` (
   `pid` int(11) NOT NULL,
   `pemail` varchar(255) NOT NULL,
-  `pname` varchar(255) DEFAULT NULL,
+  `f_name` varchar(255) DEFAULT NULL,
+  `l_name` varchar(50) DEFAULT NULL,
+  `m_name` varchar(50) DEFAULT NULL,
   `ppassword` varchar(255) NOT NULL,
   `pprovince` varchar(50) NOT NULL,
   `ptown` varchar(50) NOT NULL,
@@ -152,11 +193,34 @@ CREATE TABLE `patient` (
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `pprovince`, `ptown`, `pbrgy`, `pstreet`, `pdob`, `ptel`, `pmother`, `pfather`, `pmarital_status`, `psex`, `created_at`, `updated_at`) VALUES
-(22, 'maria@mail.com', 'Maria Mercedes', '123', 'Camarines Sur', 'Tigaon', 'Huyon-Huyon', '2215', '2023-08-22', '09123456789', 'Maria Mercedes', 'Mario Mercedes', 'Married', 'Female', '2023-08-23 14:01:57', '2023-08-23 14:01:57'),
-(23, 'john@mail.com', 'John Watson', '123', 'Camarines Sur', 'Tigaon', 'Huyon-huyon', '225', '1996-08-22', '09123456789', 'Mama Mo', 'Papa Ko', 'Married', 'Female', '2023-08-24 17:38:42', '2023-08-24 17:38:42'),
-(24, 'map@mail.com', 'Mapang Hee', '123', 'Camarines Sur', 'Tigaon', 'Tajolongon', '225', '1995-12-25', '09123456789', 'Nanay Ko', 'Tatay Ko', 'Married', 'Male', '2023-08-24 21:14:14', '2023-08-24 21:14:14'),
-(25, 'pedro@mail.com', 'Pedro Penduko', '123', 'Camarines Sur', 'Tigaon', 'San Antonio', '2215', '1992-12-25', '09123456789', 'Mima Ko', 'Ama Ko ', 'Widowed', 'Female', '2023-08-25 08:11:04', '2023-08-25 08:11:04');
+INSERT INTO `patient` (`pid`, `pemail`, `f_name`, `l_name`, `m_name`, `ppassword`, `pprovince`, `ptown`, `pbrgy`, `pstreet`, `pdob`, `ptel`, `pmother`, `pfather`, `pmarital_status`, `psex`, `created_at`, `updated_at`) VALUES
+(22, 'maria@mail.com', 'Maria', 'Mercedes', NULL, '123', 'Camarines Sur', 'Tigaon', 'Huyon-Huyon', '2215', '2023-08-22', '09123456789', 'Maria Mercedes', 'Mario Mercedes', 'Married', 'Female', '2023-08-23 14:01:57', '2023-08-23 14:01:57'),
+(23, 'john@mail.com', 'John ', 'Watson', NULL, '123', 'Camarines Sur', 'Tigaon', 'Huyon-huyon', '225', '1996-08-22', '09123456789', 'Mama Mo', 'Papa Ko', 'Married', 'Female', '2023-08-24 17:38:42', '2023-08-24 17:38:42'),
+(24, 'map@mail.com', 'Mapang', 'Hee', NULL, '123', 'Camarines Sur', 'Tigaon', 'Tajolongon', '225', '1995-12-25', '09123456789', 'Nanay Ko', 'Tatay Ko', 'Married', 'Male', '2023-08-24 21:14:14', '2023-08-24 21:14:14'),
+(25, 'pedro@mail.com', 'Pedro', 'Penduko', NULL, '123', 'Camarines Sur', 'Tigaon', 'San Antonio', '2215', '1992-12-25', '09123456789', 'Mima Ko', 'Ama Ko ', 'Widowed', 'Female', '2023-08-25 08:11:04', '2023-08-25 08:11:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pharmacist`
+--
+
+CREATE TABLE `pharmacist` (
+  `id` int(11) NOT NULL,
+  `f_name` varchar(50) NOT NULL,
+  `l_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(16) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pharmacist`
+--
+
+INSERT INTO `pharmacist` (`id`, `f_name`, `l_name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'Farma', 'Ceased', 'farma@mail.com', '123', '2023-09-15 16:14:03', '2023-09-15 16:14:03');
 
 -- --------------------------------------------------------
 
@@ -167,14 +231,28 @@ INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `pprovince`, `ptow
 CREATE TABLE `prescription` (
   `prescription_id` int(11) NOT NULL,
   `note` varchar(250) NOT NULL,
+  `diagnosis` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `patient_id` int(11) NOT NULL,
-  `doctor_id` int(11) NOT NULL,
+  `doctor_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `services_id` int(2) NOT NULL,
-  `doctor_docid` int(11) NOT NULL
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `prescription`
+--
+
+INSERT INTO `prescription` (`prescription_id`, `note`, `diagnosis`, `status`, `patient_id`, `doctor_id`, `created_at`, `updated_at`) VALUES
+(6, 'paracetamol - 3/day', 'tb', '', 24, NULL, '2023-09-16 19:03:58', '0000-00-00 00:00:00'),
+(7, 'Kisspirin - 3x/day', 'Selos', '', 22, NULL, '2023-09-16 19:04:45', '0000-00-00 00:00:00'),
+(8, 'kulog payo', 'TB', '', 23, NULL, '2023-09-16 23:02:04', '0000-00-00 00:00:00'),
+(9, 'paracetamol 5x/day', 'Migraine', '', 24, NULL, '2023-09-16 23:03:11', '0000-00-00 00:00:00'),
+(10, 'this is sever', 'TB', '', 24, NULL, '2023-09-16 23:05:37', '0000-00-00 00:00:00'),
+(11, 'this is sever', 'TB', '', 24, NULL, '2023-09-16 23:15:31', '0000-00-00 00:00:00'),
+(12, 'asdsda', 'Migraine', '', 24, NULL, '2023-09-16 23:15:40', '0000-00-00 00:00:00'),
+(13, 'asdsda', 'Migraine', '', 24, NULL, '2023-09-16 23:15:46', '0000-00-00 00:00:00'),
+(14, 'sfsfd', 'Asthma', '', 23, NULL, '2023-09-16 23:16:19', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -199,15 +277,10 @@ CREATE TABLE `request_medicine` (
 --
 
 INSERT INTO `request_medicine` (`request_medicine_id`, `medicine_id`, `note`, `quantity`, `status`, `patient_id`, `prescription_id`, `created_at`, `updated_at`) VALUES
-(21, 4, 'Mayo na po akong maintenance. Ty', 20, 'pending', 24, 2214, '2023-08-24 22:39:53', '2023-08-24 22:39:53'),
-(22, 3, 'mahaga po', 100, 'pending', 24, 2214, '2023-08-24 22:40:58', '2023-08-24 22:40:58'),
-(23, 4, 'hagad', 2, 'pending', 24, 221, '2023-08-24 23:11:35', '2023-08-24 23:11:35'),
-(24, 3, 'ayat man', 3, 'pending', 24, 2214, '2023-08-24 23:13:12', '2023-08-24 23:13:12'),
-(25, 3, 'enge', 200, 'pending', 24, 0, '2023-08-24 23:14:42', '2023-08-24 23:14:42'),
-(26, 4, 'enge', 20, 'pending', 25, 2215, '2023-08-25 08:19:33', '2023-08-25 08:19:33'),
-(27, 4, 'please', 15, 'pending', 25, 2214, '2023-08-25 08:25:21', '2023-08-25 08:25:21'),
-(28, 4, 'hagad', 25, 'pending', 25, 2214, '2023-08-25 10:21:25', '2023-08-25 10:21:25'),
-(29, 4, 'This is the sample note', 20, 'pending', 25, 2214, '2023-08-29 09:33:10', '2023-08-29 09:33:10');
+(33, 4, 'kulog payo', 15, 'pending', 25, 0, '2023-09-15 22:02:10', '2023-09-15 22:02:10'),
+(34, 4, 'not feeling well', 14, 'approved', 25, 0, '2023-09-15 22:02:39', '2023-09-15 22:02:39'),
+(35, 4, 'aint feeling well', 15, 'pending', 25, 0, '2023-09-15 22:03:15', '2023-09-15 22:03:15'),
+(36, 4, 'this is the note', 21, 'pending', 22, 0, '2023-09-16 18:57:35', '2023-09-16 18:57:35');
 
 -- --------------------------------------------------------
 
@@ -228,7 +301,7 @@ CREATE TABLE `services` (
 
 CREATE TABLE `webuser` (
   `email` varchar(45) DEFAULT NULL,
-  `usertype` char(1) DEFAULT NULL
+  `usertype` char(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -240,7 +313,9 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('maria@mail.com', 'p'),
 ('john@mail.com', 'p'),
 ('map@mail.com', 'p'),
-('pedro@mail.com', 'p');
+('pedro@mail.com', 'p'),
+('desk@mail.com', 'do'),
+('farma@mail.com', 'ph');
 
 --
 -- Indexes for dumped tables
@@ -258,6 +333,12 @@ ALTER TABLE `admin`
 ALTER TABLE `consultation`
   ADD PRIMARY KEY (`consultation_id`),
   ADD KEY `patient_index` (`patient_id`);
+
+--
+-- Indexes for table `desk_officer`
+--
+ALTER TABLE `desk_officer`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `doctor`
@@ -287,13 +368,18 @@ ALTER TABLE `patient`
   ADD PRIMARY KEY (`pid`);
 
 --
+-- Indexes for table `pharmacist`
+--
+ALTER TABLE `pharmacist`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `prescription`
 --
 ALTER TABLE `prescription`
   ADD PRIMARY KEY (`prescription_id`),
   ADD KEY `patient_id` (`patient_id`),
-  ADD KEY `patient_index_id` (`patient_id`),
-  ADD KEY `fk_prescription_services1` (`services_id`);
+  ADD KEY `doctor_id` (`doctor_id`);
 
 --
 -- Indexes for table `request_medicine`
@@ -324,7 +410,13 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `consultation`
 --
 ALTER TABLE `consultation`
-  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+
+--
+-- AUTO_INCREMENT for table `desk_officer`
+--
+ALTER TABLE `desk_officer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -336,7 +428,7 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `health_monitoring`
 --
 ALTER TABLE `health_monitoring`
-  MODIFY `health_monitoring_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `health_monitoring_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `medicine_inventory`
@@ -351,10 +443,22 @@ ALTER TABLE `patient`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT for table `pharmacist`
+--
+ALTER TABLE `pharmacist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `prescription`
+--
+ALTER TABLE `prescription`
+  MODIFY `prescription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `request_medicine`
 --
 ALTER TABLE `request_medicine`
-  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables
@@ -376,7 +480,8 @@ ALTER TABLE `health_monitoring`
 -- Constraints for table `prescription`
 --
 ALTER TABLE `prescription`
-  ADD CONSTRAINT `fk_prescription_services1` FOREIGN KEY (`services_id`) REFERENCES `services` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`docid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `patiend_index_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`pid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `request_medicine`
