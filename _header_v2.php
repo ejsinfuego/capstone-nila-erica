@@ -156,7 +156,7 @@ session_start();
         $index = "../doctors/index.php";
         $health_records = "patients.php";
     }
-
+    //set links for sidebar depends on the user type;
     if($_SESSION['usertype']=='ph'){
         $first_side_link = "medicine_inventory.php";
         $second_side_link = "add_prescription.php";
@@ -165,10 +165,14 @@ session_start();
         $second_side_link = "book_appointment.php";
     }elseif($_SESSION['usertype'] == 'do'){
         $first_side_link = "appointments.php";
+    }elseif($_SESSION['usertype']=='d'){
+        $first_side_link = "medicine_inventory.php";
+        $second_side_link = "add_prescription.php";
     }
      if(isset($_SESSION['message']) && $_SESSION['message'] !='' && isset($_SESSION['show_modal']) && $_SESSION['show_modal'] !=''){
         $myModal = $_SESSION['show_modal'];
         unset($_SESSION['show_modal']);
+        
     }
 
     $check_patients = "";
@@ -296,6 +300,8 @@ session_start();
                             }elseif($_SESSION['usertype']=='do'){
                                 $pending_appointment = $database->query("select * from consultation where stat='pending'")->fetch_all();
                                 echo count($pending_appointment)." Pending Appointments";
+                            }elseif($_SESSION['usertype']=='d'){
+                                echo "Available Medicines";
                             }?></span></strong></a>
                         <a class="d-lg-flex justify-content-lg-center" href="<?php echo $second_side_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;"><?php echo($_SESSION['usertype'] == 'd'|| $_SESSION['usertype']=='ph') ? 'Add Prescription Here' : 'Book an appointment here...'; ?></span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
                 </div>

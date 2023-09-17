@@ -156,7 +156,8 @@ if($_POST){
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"></path>
                                 </svg></div>
                             <form class="text-center" method="POST" action="login_v2.php">
-                            <div class="mb-3">
+                            <!-- for user type -->
+                            <!-- <div class="mb-3">
                                 <label>Log in as</label>
                                     <select class="form-control" type="email" name="utype" placeholder="Usertype">
                                         <option value="p">Patient</option>
@@ -165,7 +166,7 @@ if($_POST){
                                         <option value="ph">Pharmacist</option>
                                         <option value="do">Front Desk</option>
                                     </select>
-                            </div>
+                            </div> -->
                                 <div class="mb-3">
                                     <input class="form-control" type="email" name="useremail" placeholder="Email"></div>
                                 <div class="mb-3">

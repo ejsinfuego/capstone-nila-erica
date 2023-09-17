@@ -13,7 +13,8 @@ if($_POST){
     $timestamp= Carbon::now('Asia/Kolkata');
     
     $database->query("update medicine_inventory set med_qty='$quantity', updated_at='$timestamp' where medicine_id=".$_POST['med_id']);
-    $_SESSION['message']="Medicine Updated!";
-    $_SESSSION['show_modal'] = "myModal";
-    header("location: medicine_inventory.php");
+    
 }
+    $_SESSION['message']="Medicine Added!";
+    $_SESSION['show_modal'] = "myModal";
+    header("location: medicine_inventory.php");
