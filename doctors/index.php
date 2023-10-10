@@ -35,20 +35,23 @@ include(__DIR__ . '/../_header_v2.php');
     <div class="container py-4 py-xl-5" style="background: #ffffff;border-radius: 10px;color: #3c3744;height: 274.4px; border: 1px solid #2E8B57">
         <div class="row gy-4 row-cols-2 row-cols-md-4">
             <div class="col">
+            <a class="text-decoration-none" href="<?php echo $appointment_link; ?>">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                             <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
                             <path d="M152 64H296V24C296 10.75 306.7 0 320 0C333.3 0 344 10.75 344 24V64H384C419.3 64 448 92.65 448 128V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V128C0 92.65 28.65 64 64 64H104V24C104 10.75 114.7 0 128 0C141.3 0 152 10.75 152 24V64zM48 248H128V192H48V248zM48 296V360H128V296H48zM176 296V360H272V296H176zM320 296V360H400V296H320zM400 192H320V248H400V192zM400 408H320V464H384C392.8 464 400 456.8 400 448V408zM272 408H176V464H272V408zM128 408H48V448C48 456.8 55.16 464 64 464H128V408zM272 192H176V248H272V192z"></path>
                         </svg></div>
                     <div class="px-3">
-                        <a href="<?php echo $appointment_link; ?>">
                         <h2 class="fw-bold mb-0"><?php echo $appointments ?></h2>
                         <p class="mb-0">Pending Appointments</p>
-                        </a>
+                        
                     </div>
+                
                 </div>
+            </a>
             </div>
             <div class="col">
+            <a class="text-decoration-none" href="<?php echo $med_link; ?>">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-prescription">
                             <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6h-2ZM6 7h1.5a.5.5 0 0 1 0 1H6V7Z"></path>
@@ -59,8 +62,10 @@ include(__DIR__ . '/../_header_v2.php');
                         <p class="mb-0">Prescriptions</p>
                     </div>
                 </div>
+            </a>
             </div>
             <div class="col">
+            <a class="text-decoration-none" href="<?php echo $health_records; ?>">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-disabled-mobile="true" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person-vcard-fill">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z"></path>
@@ -70,8 +75,10 @@ include(__DIR__ . '/../_header_v2.php');
                         <p class="mb-0">Patients</p>
                     </div>
                 </div>
+            </a>
             </div>
             <div class="col">
+            <a class="text-decoration-none" href="<?php echo $med_link_sidebar; ?>">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule">
                             <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
@@ -81,6 +88,7 @@ include(__DIR__ . '/../_header_v2.php');
                         <p class="mb-0">Pending Medicine Requests</p>
                     </div>
                 </div>
+            </a>
             </div>
         </div>
     </div>
@@ -110,7 +118,7 @@ include(__DIR__ . '/../_header_v2.php');
                 </div>
             </div>
             <div class="col">
-                <div class="card">
+                <div class="card"> 
                     <div class="card-body d-flex flex-column align-items-center align-content-center p-4">
                         <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->

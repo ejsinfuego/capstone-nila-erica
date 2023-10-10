@@ -13,18 +13,9 @@ $patient_name = $database->query("select f_name, l_name from patient where pid =
 }else{
     $patient_name = $database->query("select pid, f_name, l_name from patient");
 }
-if(isset($_POST['patient_id'])){
-    $patient_id = $_POST['patient_id'];
-    $diagnosis = $_POST['diagnosis'];
-    $note = $_POST['note'];
-    $database->query("insert into prescription(patient_id, diagnosis, note, created_at) values('$patient_id', '$diagnosis', '$note', '$time')");
-    $_SESSION['message'] = "Prescription added.";
-    $_SESSION['show_modal'] = "myModal";
-
-}
 ?>
 <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;margin-left: 22px;border-radius: 10px;">
-    <form method="POST" class="text-start" style="border-radius: 10px;">
+    <form method="POST" action="addPrescription.php" class="text-start" style="border-radius: 10px;">
         <h2 class="text-center justify-content-around" style="text-shadow: 0px 0px;padding-bottom: 0;">Prescriptions</h2>
         <h6 class="text-center">Fill out with necessary information about</h6>
         <label class="form-label" style="margin-left: 8px;margin-top: 9px;margin-bottom: -1px;">Patient Name</label>

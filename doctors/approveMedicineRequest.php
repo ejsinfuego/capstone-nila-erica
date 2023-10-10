@@ -4,12 +4,27 @@
 
     include('../connection.php');
     //approve appointment
-    if(isset($_GET['request_medicine_id'])){
+    if($_GET){
         $request_medicine_id = $_GET['request_medicine_id'];
+
+        $medicine_request = $database->query("select * from request_medicine where request_medicine_id = '$request_medicine_id'");
+        $medicine_request = $medicine_request->fetch_assoc();
+
         $database->query("
         update request_medicine set status = 'approved' where request_medicine_id = '$request_medicine_id'");
+        
+        $database->query("
+        update medicine_inventory set med_qty = med_qty - ".$medicine_request['quantity']." where medicine_id = '".$medicine_request['medicine_id']."'");
+
+
+        $message = "Request(s) approved.";
+        
+    }else{
+        $message = "Failed to approve request(s).";
     }
    
-    $_SESSION['message'] = "Appointment(s) approved.";
+    $_SESSION['message'] = $message;
     $_SESSION['show_modal'] = "myModal";
-    header('location: medicine_requests.php');    
+    header('location: request_medicine.php');
+
+  

@@ -1,5 +1,7 @@
 <?php 
-$title = $title ??'RHUConnect';?>
+$title = $title ??'RHUConnect';
+session_start();
+?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 <head>
@@ -25,7 +27,8 @@ $title = $title ??'RHUConnect';?>
     background-color: rgba(46,139,87,0.47) !important;
     color: #fff!important;
     box-shadow: none!important;
-}
+    }
+   
 </style>
 <script>
     // //fix delete appointment (deadline friday)
@@ -100,11 +103,11 @@ $title = $title ??'RHUConnect';?>
     setTimeout(function() {
       $('#myModal').modal('hide');
     }, 2000);
+
+        
   });
 </script>
-<?php 
-
-session_start();
+<?php
 
     if(isset($_SESSION["user"])){
         //check if the user is logged in and if the user is a patient or doctor
@@ -184,7 +187,7 @@ session_start();
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="<?php echo $appointment_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
                     <li class="nav-item"><a class="nav-link" data-bss-hover-animate="jello" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
-                    <li class="nav-item" style="color: #fbfff1;"><a class="nav-link" data-bss-hover-animate="jello" href="#" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Consultation</a></li>
+
                     <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Records</a></li>
                 </ul>
                 <div class="justify-content-center me-3">

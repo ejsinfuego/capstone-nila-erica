@@ -22,7 +22,6 @@ $timeNow = Carbon::now('Asia/Kolkata');
                $date= $timeNow;  
    
                if($getNumbers->fetch_assoc()['med_qty'] >= $quantity){
-                  $database->query("update medicine_inventory set med_qty = med_qty - $quantity where medicine_id = '".$_POST['medicine_id']."'");
                   $database->query("insert into request_medicine(medicine_id, quantity, prescription_id, patient_id, status, note, created_at, updated_at) values('$medicineid','$quantity','$prescriptionid','$patientid','$status','$note','$date','$date')");
                   $_SESSION['message']="Request sent!";
                   $_SESSION['show_modal'] = "myModal";

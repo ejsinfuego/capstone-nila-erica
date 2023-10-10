@@ -10,7 +10,7 @@ include(__DIR__ . '/../_header_v2.php'); ?>
 
     //get available medicine list from database
     //sql command which gets the med name and patient name in using request_medicine table using inner join
-    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where request_medicine.status ='pending' and patient_id = $userid;
+    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id where patient_id = $userid;
     ");
     $medicinefetch=$medicinerow->fetch_assoc();
     
