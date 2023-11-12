@@ -1,8 +1,9 @@
 <?php 
 $title = "Request Medicine";
-include(__DIR__ . '/../_header_v2.php'); ?>
+// include(__DIR__ . '/../_header_v2.php'); 
+?>
 
-            <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;margin-left: 22px;border-radius: 10px;font-family: Montserrat, sans-serif;">
+            <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;border-radius: 10px;font-family: Montserrat, sans-serif;">
                 <?php
                             
                     //get available medicine list from database
@@ -54,4 +55,4 @@ include(__DIR__ . '/../_header_v2.php'); ?>
         </div>
     </div>
   
-<?php include(__DIR__ .'/../_footer.php'); ?>
+<!-- <?php include(__DIR__ .'/../_footer.php'); ?> -->

@@ -27,7 +27,9 @@ $prescriptions = count($database->query("select * from prescription where patien
     <div class="container py-4 py-xl-5 justify-content-center" style="background: #ffffff;margin-top: 44px;border-radius: 10px;color: #3c3744;height: 274.4px; border: 2px solid #2E8B57;">
         <div class="row justify-content-center gy-4 row-cols-2 row-cols-md-4">
             <div class="col">
+                <a href="appointments.php">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
+               
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                             <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
                             <path d="M152 64H296V24C296 10.75 306.7 0 320 0C333.3 0 344 10.75 344 24V64H384C419.3 64 448 92.65 448 128V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V128C0 92.65 28.65 64 64 64H104V24C104 10.75 114.7 0 128 0C141.3 0 152 10.75 152 24V64zM48 248H128V192H48V248zM48 296V360H128V296H48zM176 296V360H272V296H176zM320 296V360H400V296H320zM400 192H320V248H400V192zM400 408H320V464H384C392.8 464 400 456.8 400 448V408zM272 408H176V464H272V408zM128 408H48V448C48 456.8 55.16 464 64 464H128V408zM272 192H176V248H272V192z"></path>
@@ -36,9 +38,12 @@ $prescriptions = count($database->query("select * from prescription where patien
                         <h2 class="fw-bold mb-0"><?php echo $appointments ?></h2>
                         <p class="mb-0">Appointments</p>
                     </div>
+                    
                 </div>
+            </a>
             </div>
             <div class="col">
+            <a href="prescription.php">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-prescription">
                             <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6h-2ZM6 7h1.5a.5.5 0 0 1 0 1H6V7Z"></path>
@@ -49,8 +54,10 @@ $prescriptions = count($database->query("select * from prescription where patien
                         <p class="mb-0">Prescriptions</p>
                     </div>
                 </div>
+            </a>
             </div>
             <div class="col">
+            <a href="medicine_requests.php">
                 <div class="text-center d-flex flex-column justify-content-center align-items-center py-3">
                     <div class="bs-icon-xl bs-icon-circle bs-icon-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg" data-bss-hover-animate="tada" style="background: #2E8B57;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule">
                             <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
@@ -60,7 +67,9 @@ $prescriptions = count($database->query("select * from prescription where patien
                         <p class="mb-0">Medicine Requests</p>
                     </div>
                 </div>
+            </a>
             </div>
+       
         </div>
     </div>
     <div class="container py-4 py-xl-5">

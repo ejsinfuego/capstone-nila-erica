@@ -10,12 +10,13 @@ include(__DIR__ . '/../_header_v2.php');
 
     //get available medicine list from database
     //an sql command which gets the med name and patient name in using request_medicine table using inner join
-    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.request_medicine_id, request_medicine.quantity, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id;
+    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.request_medicine_id, request_medicine.quantity, request_medicine.approved_by, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id;
     ");
 ?>
 <div class="col-lg-8 col-xxl-9 d-lg-flex d-xxl-flex flex-column align-items-lg-center align-items-xxl-center ms-0" style="background: #f1f0f0; border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;height: auto;border: 1px solid #2E8B57;">
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Medicine Requests</h1>
                 <p>Patient's health information</p>
+
                 <hr style="width: 535px;color: #2E8B57;">
                 <div class="py-2" style="text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
                     <table style="border-radius: 6px;" class="table table-sm table-hover table-responsive" id="sortTable">
@@ -34,7 +35,13 @@ include(__DIR__ . '/../_header_v2.php');
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['f_name']." ".$medicinefetch['l_name']; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['med_name']; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['quantity']; ?></td>
-                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['status']; ?></td>
+                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0); font-size: 15px;'><?php
+                                if($medicinefetch['status'] == 'approved'){
+                                    echo ucfirst($medicinefetch['status']).' by '.$medicinefetch['approved_by'];
+                                }else{
+                                    echo ucfirst($medicinefetch['status']);
+                                }
+                                ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
                                 <?php if($_SESSION['usertype'] == 'ph') :?><form method="GET" action="">
                                         <div class="">

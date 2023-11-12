@@ -132,6 +132,7 @@ session_start();
         $appointment_link_sidebar = "../patients/appointments.php";
         $index = "../patients/index.php";
         $health_records = "Health_monitor.php";
+        $_SESSION['complete_name'] = $userfetch["f_name"].' '.$userfetch['l_name'];
 
     }else{
         //import database
@@ -141,16 +142,19 @@ session_start();
             $userfetch=$userrow->fetch_assoc();
             $userid= $userfetch["docid"];
             $username=$userfetch["docname"];
+            $_SESSION['complete_name'] = $userfetch["docname"];
         }elseif($_SESSION['usertype']=='do'){
             $userrow = $database->query("select * from desk_officer where email='$useremail'");
             $userfetch=$userrow->fetch_assoc();
             $userid= $userfetch["id"];
             $username=$userfetch["f_name"].' '.$userfetch['l_name'];
+            $_SESSION['complete_name'] = $userfetch["f_name"].' '.$userfetch['l_name'];
         }elseif($_SESSION['usertype'] == 'ph'){
             $userrow = $database->query("select * from pharmacist where email='$useremail'");
             $userfetch=$userrow->fetch_assoc();
             $userid= $userfetch["id"];
             $username=$userfetch["f_name"].' '.$userfetch['l_name'];
+            $_SESSION['complete_name'] = $userfetch["f_name"].' '.$userfetch['l_name'];
         }
         $med_link = "../doctors/medicine_inventory.php";
         $appointment_link = "../doctors/appointments.php";
@@ -294,7 +298,11 @@ session_start();
                             </a></li>
                     </ul>
                         <hr class="d-lg-flex align-items-center align-self-center justify-content-lg-center align-items-lg-center" style="width: 212px; color: #212529; border-top: 2px solid #2E8B57;">
-                        <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;"><a class="d-lg-flex justify-content-lg-center" href="<?php echo $first_side_link; ?>" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
+                        <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;">
+                        <a class="d-lg-flex justify-content-lg-center" id=
+                        <?php if($_SESSION['usertype']=='p'){
+                            echo "reqmed";
+                        }?> href="#" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
                         <strong>
                             <span style="color: #2E8B57;"><?php if($_SESSION['usertype']=='p'){
                                 echo "Request Medicine Here";
@@ -306,6 +314,12 @@ session_start();
                             }elseif($_SESSION['usertype']=='d'){
                                 echo "Available Medicines";
                             }?></span></strong></a>
-                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo $second_side_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;"><?php echo($_SESSION['usertype'] == 'd'|| $_SESSION['usertype']=='ph') ? 'Add Prescription Here' : 'Book an appointment here...'; ?></span></strong></a><a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57">Check you health record..</span></strong></a></div>
+                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo $second_side_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;">
+                        <?php echo($_SESSION['usertype'] == 'd'|| $_SESSION['usertype']=='ph') ? 'Add Prescription Here' : 'Book an appointment here...'; ?>
+                        </span>
+                        </strong>
+                        </a>
+                        <a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong>
+                        <span style="color: #2E8B57">Check you health record..</span></strong></a></div>
                 </div>
 <?php endif; ?>

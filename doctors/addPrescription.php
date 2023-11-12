@@ -1,7 +1,12 @@
 <?php 
 
+require '../vendor/autoload.php';
+use Carbon\Carbon;
+
 include('../connection.php');
 session_start();
+$time = Carbon::now('Asia/Kolkata');
+
 
 if(isset($_POST['patient_id'])){
     $patient_id = $_POST['patient_id'];

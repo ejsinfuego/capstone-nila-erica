@@ -19,7 +19,7 @@ if($_POST){
     $time = empty($_POST['appointmentTime']) ? $appointment['time'] : $_POST['appointmentTime'];
     $timestamp = $timeNow;
 
-    $database->query("update consultation set type='$type', date='$date', time='$time', updated_at='$timestamp' where consultation_id='$appointmentid'");
+    $database->query("update consultation set type='$type', date='$date', time='$time', updated_at='$timestamp', stat='pending' where consultation_id='$appointmentid'");
     $_SESSION['message']="Appointment Updated!";
     $_SESSION['show_modal'] = "myModal";
     header("location: appointments.php");

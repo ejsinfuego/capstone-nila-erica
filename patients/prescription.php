@@ -19,6 +19,9 @@ $prescriptions = $database->query("select * from prescription where patient_id =
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Prescription ID</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Note</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Diagnosis</th>
+                                <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Date Prescribed</th>
+                                <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Action</th>
+
                             </tr>
                         </thead>
                         <tbody style="border-style: solid;background: rgba(255,255,255,0);">
@@ -31,7 +34,15 @@ $prescriptions = $database->query("select * from prescription where patient_id =
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$prescription['prescription_id']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$prescription['note']."</td>";
                             echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".$prescription['diagnosis']."</td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>".date('M d, Y', strtotime($prescription['created_at']))."</td>";
+                            echo "<td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
+                            <form method='get'action='generateReport.php'>
+                            <input type='hidden' name='prescription_id' value='".$prescription['prescription_id']."'>
+                            <button class='btn'style='background-color: #2E8B57; color: white;' type='submit' prescription_id=".$prescription['prescription_id']."'>Print</button>
+                            </form>
+                            </td>";
                             echo "</tr>";
+
                         }
                     }
                         ?>

@@ -95,6 +95,7 @@ if($_POST){
 
                 //   doctor dashbord
                 $_SESSION['user']=$email;
+                $_SESSION['complete_name']=$checker->fetch_assoc()['complete_name'];
                 $_SESSION['usertype']='ph';
                 header('location: ./doctors/index.php');
 
