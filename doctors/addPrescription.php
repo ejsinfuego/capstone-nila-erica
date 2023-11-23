@@ -15,6 +15,6 @@ if(isset($_POST['patient_id'])){
     $database->query("insert into prescription(patient_id, diagnosis, note, created_at) values('$patient_id', '$diagnosis', '$note', '$time')");
     $_SESSION['message'] = "Prescription added.";
     $_SESSION['show_modal'] = "myModal";
-    header("location: add_prescription.php");
+    header("location: patients.php");
 
 }

@@ -2,48 +2,63 @@
 $title = "Medicine Requests";
 $border = "border-left: 3px solid #2E8B57;";
 
-include(__DIR__ . '/../_header_v2.php');
-
-    if( $_SESSION['usertype'] == 'p'){
-        header('location: ../unauthorized.php');
+//check if uri contains this page
+if(!strpos($_SERVER['REQUEST_URI'], 'medicine_requests.php')){
+    
+}else{ 
+    session_start();
+    if( $_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+    header('location: ../login_v2.php');
     }
+    session_abort();
+    include(__DIR__ . '/../_header_v2.php');
+}
 
     //get available medicine list from database
     //an sql command which gets the med name and patient name in using request_medicine table using inner join
-    $medicinerow = $database->query("select patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.request_medicine_id, request_medicine.quantity, request_medicine.approved_by, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id;
+    $medicinerow = $database->query("select patient.pid, patient.f_name, patient.l_name, medicine_inventory.med_name, request_medicine.request_medicine_id, request_medicine.quantity, request_medicine.approved_by, request_medicine.updated_at, request_medicine.note, request_medicine.status from patient inner join request_medicine on patient.pid = request_medicine.patient_id inner join medicine_inventory on request_medicine.medicine_id = medicine_inventory.medicine_id;
     ");
 ?>
-<div class="col-lg-8 col-xxl-9 d-lg-flex d-xxl-flex flex-column align-items-lg-center align-items-xxl-center ms-0" style="background: #f1f0f0; border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;height: auto;border: 1px solid #2E8B57;">
+<div class="col py-lg-4 d-lg-flex flex-column align-items-lg-center" style="background: #f1f0f0;font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px; border: 2px solid #2E8B57;">
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Medicine Requests</h1>
                 <p>Patient's health information</p>
 
-                <hr style="width: 535px;color: #2E8B57;">
-                <div class="py-2" style="text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                    <table style="border-radius: 6px;" class="table table-sm table-hover table-responsive" id="sortTable">
+                <hr style="width: auto; color: #2E8B57;">
+                <div class="py-2 w-100" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
+                    <table style="border-radius: 6px; font-size: 15px;" class="table table-sm sortTable" id="sortTable">
                         <thead>
                             <tr>
-                                <th class="p-2" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
-                                <th class="p-2" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>
-                                <th class="p-2" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Quantity</th>
-                                <th class="p-2" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Status</th>
-                                <th class="p-2" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);"></th>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Quantity</th>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Status</th>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Note</th>
+                                <?php if($_SESSION['usertype'] == 'ph') :?>
+                                <th class="" style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Action</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody style="border-style: solid;background: rgba(255,255,255,0);">
                         <?php foreach($medicinerow as $medicinefetch) : ?>
                             <tr style='border-style: solid;background: rgba(255,255,255,0);'>
-                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['f_name']." ".$medicinefetch['l_name']; ?></td>
+                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
+                                <form method="GET" action="Health_monitor.php"><input type="hidden" name="pid" value="<?php echo $medicinefetch['pid']; ?>"><input name="submit" type="submit" style="border: none; background: none;" value="<?php echo $medicinefetch['f_name'].' '.$medicinefetch['l_name']; ?>"></form>
+                                </td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['med_name']; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $medicinefetch['quantity']; ?></td>
-                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0); font-size: 15px;'><?php
+                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0); font-size: 12px;'><?php
                                 if($medicinefetch['status'] == 'approved'){
-                                    echo ucfirst($medicinefetch['status']).' by '.$medicinefetch['approved_by'];
+                                    echo ucfirst($medicinefetch['status']).' by '.$medicinefetch['approved_by'].' on '.date('M d, y',strtotime($medicinefetch['updated_at']));
                                 }else{
                                     echo ucfirst($medicinefetch['status']);
                                 }
                                 ?></td>
+                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0); font-size: 12px;'>
+                                 <?php echo $medicinefetch['note'] ?? '' ;?>
+                                 </td>
+                                <?php if($_SESSION['usertype'] == 'ph') :?>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
-                                <?php if($_SESSION['usertype'] == 'ph') :?><form method="GET" action="">
+                                <form method="GET" action="">
                                         <div class="">
                                             <?php if ($medicinefetch['status'] == 'pending' and $medicinefetch['status'] != 'approved') : ?>
                                             <small>
@@ -66,6 +81,7 @@ include(__DIR__ . '/../_header_v2.php');
                         </tbody>
                     </table>
                 </div>
+</div>
 <script>
 
 function approveMedicineRequest(request_medicine_id){
@@ -90,4 +106,10 @@ function claimMedicine(request_medicine_id){
     xhttp.send();
 };
 </script>
-<?php include(__DIR__ . '/../_footer.php') ?>
+<?php
+    if(!strpos($_SERVER['REQUEST_URI'], '/doctors/medicine_requests.php')){
+        
+    }else{
+       include(__DIR__ . '/../_footer.php');
+    }
+?>

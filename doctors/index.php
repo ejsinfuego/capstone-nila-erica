@@ -1,8 +1,11 @@
 <?php
 $title = "Index";
-
+session_start();
+if($_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+    header('Location: ../login_v2.php');
+}
+session_abort();
 include(__DIR__ . '/../_header_v2.php');
-
 
     
         if(isset($_SESSION['message']) && $_SESSION['message'] !=''){

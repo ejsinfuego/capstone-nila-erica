@@ -1,6 +1,12 @@
 <?php 
 $title= 'Prescriptions';
 $border = "border-left: 3px solid #2E8B57;";
+session_start();
+
+if($_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+  header('Location: ../login_v2.php');
+}
+session_abort();
 include(__DIR__ . '/../_header_v2.php');
 
 $prescriptions = $database->query('select patient.f_name, patient.l_name, prescription.prescription_id, prescription.note, prescription.status, prescription.diagnosis, prescription.patient_id, prescription.status, prescription.created_at from prescription inner join patient on prescription.patient_id = patient.pid')

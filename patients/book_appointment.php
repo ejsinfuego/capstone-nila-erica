@@ -15,7 +15,7 @@ $today = date("Y-m-d");
                     <label class="form-label" style="margin-left: 8px;margin-top: 9px;margin-bottom: -1px;">Date</label>
                     <input class="form-control w-25" min="<?php echo $today; ?>" name="date" type="date">
                     <label class="form-label" style="margin-left: 8px;margin-top: 9px;margin-bottom: -1px;">Time</label>
-                    <input class="form-control w-25" min="9:000" max="18:00" name="time" type="time">
+                    <input class="form-control w-25" min="08:00" max="18:00" name="time" type="time">
                     <label class="form-label" style="margin-left: 8px;margin-top: 9px;margin-bottom: -1px;">Note</label><textarea name="note" class="form-control"></textarea>
                     <input class="form-control" name="patient_id" value="<?php echo $userid; ?>" type="hidden">
                     <input name="submit" type="submit" value="Submit" style="margin-top: 18px;margin-bottom: 18px;background: #2E8B57;" class="btn btn-sm btn-primary" >

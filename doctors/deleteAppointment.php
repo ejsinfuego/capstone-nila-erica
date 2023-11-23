@@ -1,6 +1,9 @@
 <?php
 
  session_start();
+ if($_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+    header('Location: ../login_v2.php');
+}
 
     include('../connection.php');
     //delete all picked appointments

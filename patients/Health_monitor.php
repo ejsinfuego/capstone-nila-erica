@@ -15,22 +15,22 @@ include(__DIR__ . '/../_header_v2.php');
                     <div class="card-body d-flex flex-row flex-nowrap justify-content-lg-start align-items-lg-center" style="width: auto;margin-left: 6px;">
                         <form method="post" action="editHealthRecords.php" style="width: 489px;margin-left: 0px;margin-top: 20px;" class="text-center d-flex flex-row flex-wrap justify-content-lg-start align-items-lg-center ms-2">
                             <div class="mb-3 d-flex flex-column w-100" style="margin-right: 12px;"><label class="form-label justify-content-lg-start">First Name</label> 
-                            <p class="form-control" name="first_name"><?php echo $patients['f_name']; ?></p>
+                            <p class="form-control" name="first_name"><?php echo $patients['f_name'] ?? 'Not Set'; ?></p>
                             <label class="form-label justify-content-lg-start">Last Name</label>
-                            <p class="form-control" name="lastname"><?php echo $patients['l_name']; ?></p>
+                            <p class="form-control" name="lastname"><?php echo $patients['l_name'] ?? 'Not Set'; ?></p>
                             </div>
                             <div class="mb-3" style="margin-right: 12px;" >
                             </div>
                             <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">Weight</label>
-                            <p class="form-control" name="weight"><?php echo $patients['weight']; ?>kg</p></div>
+                            <p class="form-control" name="weight"><?php echo $patients['weight'] ?? ''; ?>kg</p></div>
                             <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">Height</label>
-                            <p class="form-control" name="height"><?php echo $patients['height']; ?>cm</p></div>
+                            <p class="form-control" name="height"><?php echo $patients['height'] ?? ''; ?>cm</p></div>
                             <div class="mb-3" style="margin-right: 12px;"><label class="form-label d-lg-flex justify-content-lg-start">Blood Pressure</label>
-                            <p class="form-control" name="bp"><?php echo $patients['blood_pressure']; ?></p>
+                            <p class="form-control" name="bp"><?php echo $patients['blood_pressure'] ?? ''; ?></p>
                             </div>
                             <div class="mb-3" style="width: 100%;"><label class="form-label d-lg-flex justify-content-lg-start">Note</label>
                             <p class="form-control form-control-lg" name="note">
-                            <?php echo $patients['note']; ?>
+                            <?php echo $patients['note'] ?? '  '; ?>
                             </p>
                             </div>
                         </form>

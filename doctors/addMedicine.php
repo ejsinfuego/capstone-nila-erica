@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 use Carbon\Carbon;
 
 include("../connection.php");
-
+$userid = $_SESSION['userid'];
 //post to add medicine
 if($_POST){
     $currentNumber = $database->query("select med_qty from medicine_inventory where medicine_id=".$_POST['med_id'])->fetch_assoc()['med_qty'];
@@ -12,7 +12,7 @@ if($_POST){
     $description=$_POST['description'];
     $timestamp= Carbon::now('Asia/Kolkata');
     
-    $database->query("update medicine_inventory set med_qty='$quantity', updated_at='$timestamp' where medicine_id=".$_POST['med_id']);
+    $database->query("update medicine_inventory set med_qty='$quantity', updated_at='$timestamp', recent_acquired='$timestamp', acquired_by='$userid' where medicine_id=".$_POST['med_id']);
     
 }
     $_SESSION['message']="Medicine Added!";

@@ -1,4 +1,50 @@
-</div>
+ <!-- Modals -->
+                
+                <div id="prescription" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <?php include('add_prescription.php'); ?>
+                    </div>
+                </div>
+                </div>
+                </div>
+                
+                <div id="newMedModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <?php include('newMedTab.php'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                
+                <div id="logoutModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="my-modal-title">Confirmation</h5>
+                                <button class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>You are about to log out.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary text-white" type="button"><a href="../logout.php" class="text-white">Confirm</a></button>
+                                <button class="btn btn-primary" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            <!-- end modals -->
+ 
     </div>
     <footer class="text-center py-4">
         <div class="container">
@@ -25,7 +71,7 @@
         </div>
     </footer>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>

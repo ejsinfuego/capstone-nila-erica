@@ -8,7 +8,12 @@ session_start();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title><?php echo htmlspecialchars($title, ENT_QUOTES); ?></title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alata&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alatsi&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta&amp;display=swap">
@@ -20,7 +25,6 @@ session_start();
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-
 </head>
 <style>
     .links:hover{
@@ -32,6 +36,7 @@ session_start();
 </style>
 <script>
     // //fix delete appointment (deadline friday)
+
     function deleteAppointment(appointment_id){
         if(confirm("Sure to delete?") == true){
             var xhttp = new XMLHttpRequest();
@@ -83,10 +88,14 @@ session_start();
     };
     
   $(document).ready(function() {
-    $('#sortTable').DataTable({
+    $('.sortTable').DataTable({
        destroy: true,
        responsive: true,
        select: true,
+       "autoWidth": true,
+       dom: 'Plfrtip'
+       
+
     });
       // Show the modal on button click
     $('.deleteButton').click(function() {
@@ -103,7 +112,34 @@ session_start();
     setTimeout(function() {
       $('#myModal').modal('hide');
     }, 2000);
+    
+    $('.nav-tabs a').click(function(){
+         $(this).tab('show');
+         //get the table element of the current tab
+        // Get the class name of an element with ID "example"
+     });
 
+     $("#reqmed").click(function(){
+         $("#request_medicine").modal('show');
+     });
+
+     $("#prescribe").click(function(){
+         $("#prescription").modal('show');
+     });
+
+     $("#newMed").click(function(){
+         $("#newMedModal").modal('show');
+     });
+
+     $("#logout").click(function(){
+        $("#logoutModal").modal('toggle');
+     });
+
+     $(".ex").click(function(){
+        $("#logoutModal").modal('toggle');
+     });
+
+     
         
   });
 </script>
@@ -155,6 +191,7 @@ session_start();
             $userid= $userfetch["id"];
             $username=$userfetch["f_name"].' '.$userfetch['l_name'];
             $_SESSION['complete_name'] = $userfetch["f_name"].' '.$userfetch['l_name'];
+            $_SESSION['userid'] = $userfetch['id'];
         }
         $med_link = "../doctors/medicine_inventory.php";
         $appointment_link = "../doctors/appointments.php";
@@ -185,19 +222,18 @@ session_start();
     $check_patients = "";
     ?>
 <body style="font-family: Montserrat, sans-serif;background: url(&quot;../assets/img/bg.jpg.png&quot;), #fbfff1;">
-    <nav class="navbar navbar-expand-md shadow py-3" data-bs-theme="light" style="--bs-body-color: #212529;--bs-primary: #090c9b;--bs-primary-rgb: 9,12,155;background: linear-gradient(69deg, #2E8B57 56%, white 100%), var(--bs-primary);color: #fbfff1;border-color: #3c3744;border-bottom: 4.4px none #3c3744;font-family: Montserrat, sans-serif;">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="<?php echo $index; ?>"> <img style="width: 55px;" class="img-fluid" src="../assets/img/rhulogo.png"><span style="font-family: Montserrat, sans-serif;font-size: 25px;color: #fbfff1;font-weight: bold;">RHUConnect</span></a><button data-bs-toggle="collapse" class="navbar-toggler text-center" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <nav class="navbar navbar-expand-md shadow" data-bs-theme="light" style="--bs-body-color: #212529;--bs-primary: #090c9b;--bs-primary-rgb: 9,12,155;background: linear-gradient(69deg, #2E8B57 56%, white 100%), var(--bs-primary);color: #fbfff1;border-color: #3c3744;border-bottom: 4.4px none #3c3744;font-family: Montserrat, sans-serif;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="<?php echo $index; ?>"> <img style="width: 55px;" class="img-fluid" src="../assets/img/rhulogo.png"><span style="font-family: Montserrat, sans-serif;font-size: 25px;color: #fbfff1;font-weight: bold;">RHUConnect</span></a><button data-bs-toggle="collapse" class="navbar-toggler text-center" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1" style="color: #fbfff1;font-family: Montserrat, sans-serif;">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" data-bss-hover-animate="jello" href="<?php echo $appointment_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
-                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="jello" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
-
-                    <li class="nav-item"><a class="nav-link" data-bss-hover-animate="wobble" href="#" style="font-family: Montserrat, sans-serif;color: rgb(251,255,241);">Health Records</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="<?php echo $appointment_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
                 </ul>
                 <div class="justify-content-center me-3">
                     <strong><?php echo $username; ?></strong>
                 </div>
-                <a href="../logout.php" class="btn btn-primary" data-bss-hover-animate="bounce" type="button" style="font-family: Montserrat, sans-serif;color: #fbfff1;border-style: none; background-color: #2E8B57;">Logout</a>
+                <a href="#" id="logout" class="btn btn-primary" type="button" style="font-family: Montserrat, sans-serif;color: #fbfff1;border-style: none; background-color: #2E8B57;">Logout</a>
             </div>
             <aside></aside>
         </div>
@@ -226,6 +262,40 @@ session_start();
       </div>
     </div>
   </div>
+
+
+
+  <div id="logoutModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="my-modal-title">Confirmation</h5>
+                                <button class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>You are about to log out.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary text-white" type="button"><a href="../logout.php" class="text-white">Confirm</a></button>
+                                <button class="btn btn-primary ex" data-dismiss="modal" aria-label="Close" type="button">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+
+    <div id="request_medicine" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <?php include('request_medicine.php'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <?php if($title == "Index") : ?>
         <div class="container" style="margin-top: 45px;"></div>
         <?php if($_SESSION['usertype'] == 'd') { 
@@ -243,9 +313,19 @@ session_start();
          </a>' ;
         }?><?php else : ?> 
         <div class="container text-start" style="padding-bottom: 9px;padding-top: 16px;"></div>
-        <div class="container">
-            <div class="row gx-2">
-                <div class="col-md-8 col-lg-1 col-xl-3 col-xxl-2 offset-xl-0 d-sm-flex d-lg-flex flex-column flex-nowrap align-items-sm-center justify-content-lg-start justify-content-xl-start" id="sidebar" style="background: transparent;border-radius: 23px;width: auto;height: auto;">
+        <div class="<?php 
+        if(!strpos($_SERVER['REQUEST_URI'], 'Health_monitor.php') or $_SESSION['usertype'] == 'p'){
+            echo 'container';
+        }else{
+            echo 'container-fluid ps-4';
+        } ?>
+        ">
+            <div class="row ps-4">
+                <div class="<?php if($_SESSION['usertype'] == 'p'){
+                    echo "col-md-12 col-lg-1 col-xl-3 col-xxl-1 offset-xl-0 d-sm-flex d-lg-flex flex-column flex-nowrap align-items-sm-center justify-content-lg-start justify-content-xl-start mx-0";
+                }else{
+                    echo "col-md-12 col-lg-2 col-xl-2 col-xxl-1 offset-xl-0 d-sm-flex d-lg-flex flex-column flex-nowrap align-items-sm-center justify-content-lg-start justify-content-xl-start mx-0";
+                } ?>" id="sidebar" style="background: transparent;border-radius: 23px;width: auto;height: auto;">
                     <ul class="nav nav-tabs d-flex d-lg-flex justify-content-center justify-content-lg-center align-items-lg-start" style="border-radius: 10px;background: #f1f0f0;height: auto;width: auto;">
                         <li class="nav-item d-lg-flex flex-column justify-content-lg-center align-items-lg-center" style="width: auto;height: auto;padding: 20px;border-radius: 10px;border: 1px solid #2E8B57;">
                         <a style="font-size: 0.7rem; padding: 7px 5px 7px 10px; <?php echo($title == 'Medicine Requests') ? $border : ''; ?>" class=" nav-link nav-sidebar text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center links align-items-xxl-center" href="<?php echo $med_link_sidebar; ?>">
@@ -285,7 +365,8 @@ session_start();
                                     <p class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><strong>Health Records</strong></p>
                                 </div>
                             </div>
-                        </a><a style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px; <?php echo($title == 'Prescriptions' || $title == 'Edit Prescription') ? $border : ''; ?>" class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar links" href="prescription.php" >
+                        </a>
+                        <a style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px; <?php echo($title == 'Prescriptions' || $title == 'Edit Prescription') ? $border : ''; ?>" class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar links" href="prescription.php" >
                                 <div class="d-lg-flex justify-content-center align-items-center align-content-center align-self-center flex-nowrap justify-content-lg-center align-items-lg-center" style="color:#2E8B57;">
                                     <div class="d-lg-flex justify-content-center align-items-center justify-content-lg-center align-items-lg-center"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-capsule d-lg-flex align-self-start order-first justify-content-lg-center align-items-lg-center" style="font-size: 46px;padding: 9px;padding-right: 0px;padding-left: 0px;width: 46px;margin-left: -3px;background: var(--bs-primary-bg-subtle);border-radius: 38px;">
                                             <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429l4.243 4.242Z"></path>
@@ -295,14 +376,22 @@ session_start();
                                         <p class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><strong>Prescriptions</strong></p>
                                     </div>
                                 </div>
-                            </a></li>
+                            </a>
+                        </li>
                     </ul>
                         <hr class="d-lg-flex align-items-center align-self-center justify-content-lg-center align-items-lg-center" style="width: 212px; color: #212529; border-top: 2px solid #2E8B57;">
                         <div class="d-flex d-sm-flex justify-content-center justify-content-sm-center flex-lg-column" style="width: auto;height: auto;">
                         <a class="d-lg-flex justify-content-lg-center" id=
                         <?php if($_SESSION['usertype']=='p'){
                             echo "reqmed";
-                        }?> href="#" style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
+
+                        }?> href="
+                        <?php if($_SESSION['usertype'] != 'ph' and $_SESSION['usertype'] != 'd' and $_SESSION['usertype']!='p'){
+                            echo $first_side_link;
+                        }else{
+                            echo "#";
+                        } ?>
+                        " style="padding: 15px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;">
                         <strong>
                             <span style="color: #2E8B57;"><?php if($_SESSION['usertype']=='p'){
                                 echo "Request Medicine Here";
@@ -314,12 +403,28 @@ session_start();
                             }elseif($_SESSION['usertype']=='d'){
                                 echo "Available Medicines";
                             }?></span></strong></a>
-                        <a class="d-lg-flex justify-content-lg-center" href="<?php echo $second_side_link; ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;">
+                        <a id=
+                        <?php if($_SESSION['usertype']=='ph' or $_SESSION['usertype']=='d'){
+                            echo "prescribe";
+                        }?>
+                         class="d-lg-flex justify-content-lg-center" href="<?php if($_SESSION['usertype'] != 'ph' and $_SESSION['usertype'] != 'd'){
+                            echo $second_side_link;
+                         }else{
+                            echo "#";
+                         } ?>" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color:#2E8B57;width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong><span style="color: #2E8B57;">
                         <?php echo($_SESSION['usertype'] == 'd'|| $_SESSION['usertype']=='ph') ? 'Add Prescription Here' : 'Book an appointment here...'; ?>
                         </span>
                         </strong>
                         </a>
-                        <a class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong>
-                        <span style="color: #2E8B57">Check you health record..</span></strong></a></div>
+                        <?php if($_SESSION['usertype']=='ph') :?>
+                        <a id="newMed"class="d-lg-flex justify-content-lg-center" href="#" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong>
+                        <span style="color: #2E8B57">Add New Medicine</span></strong></a>
+                        <?php else: ?>
+                        <a class="d-lg-flex justify-content-lg-center" href="health_monitor.php" style="padding: 15px;font-size: 16px;border-radius: 6px;background: rgba(46,139,87,0.47);border-color: #2E8B57; width: auto;margin: 10px;margin-right: 20px;margin-left: 20px;"><strong>
+                        <span style="color: #2E8B57">Check you health record..</span></strong></a>
+                        <?php endif; ?>
+                    </div>
                 </div>
+
+               
 <?php endif; ?>

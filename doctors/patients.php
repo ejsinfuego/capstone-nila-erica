@@ -2,7 +2,18 @@
 $title = "Health Records";
 $border = "border-left: 3px solid #2E8B57;";
 
-include(__DIR__ . '/../_header_v2.php'); 
+
+if(!strpos($_SERVER['REQUEST_URI'], 'patients.php')){
+    
+}else{
+    session_start();
+    if($_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+        header('Location: ../login_v2.php');
+    }
+    session_abort();
+    include(__DIR__ . '/../_header_v2.php');
+}
+
 
 if($_SESSION['usertype'] == 'p'){
     header('location: ../unauthorized.php');
@@ -16,19 +27,32 @@ if($_SESSION['usertype'] == 'p'){
         $patients = [];
     }
 
+    foreach($patients as $key => $patient){
+        $age = date_diff(date_create($patient['pdob']), date_create('now'))->y;
+        $patients[$key]['age'] = $age;
+    }
+    
+
 ?>
-<div class="py-3 col-lg-8 col-xxl-9 d-lg-flex d-xxl-flex flex-column align-items-lg-center justify-content-xxl-center align-items-xxl-center ms-0" style="background: rgba(241,240,240,0.6);font-family: Montserrat, sans-serif;margin-left: 24px;border-radius: 10px;padding-top: 9px;padding-left: 15px;padding-right: 18px;height: auto;border: 2px solid #2E8B57;">
+<div class="col d-lg-flex flex-column align-items-lg-center <?php if(!strpos($_SERVER['REQUEST_URI'], 'patients.php')){
+    echo "ms-auto";
+}else{
+    echo "ms-5";
+
+}?>" style="background: #f1f0f0;font-family: Montserrat, sans-serif;border-radius: 10px; border: 2px solid #2E8B57;">
     <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Patients</h1>
         <p>List of Patient's Information</p>
         <small>Click the name of patient for more information.</small>
         <hr style="width: 535px;margin-top: 0px;color: #1e80c1;">
-    <table class="table table-bordered table-hover" id="sortTable" style="font-size: 15px;">
+    <div class="py-2 w-100" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
+    <table class="table table-sm sortTable" id="sorTable" style="font-size: 15px;">
             <thead>
                 <tr>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Sex</th>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Date of Birth</th>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Address</th>
+                    <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Age</th>
                 </tr>
             </thead>
             <tbody style="border-style: solid;background: rgba(255,255,255,0);">
@@ -41,10 +65,19 @@ if($_SESSION['usertype'] == 'p'){
                      <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo ucfirst($patient['psex']); ?></td>
                      <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo date('M-d-Y', strtotime($patient['pdob'])); ?></td>
                      <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $address; ?></td>
+                     <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo  date_diff(date_create($patient['pdob']), date_create('now'))->y; ?></td>
                   </tr>
                <?php endforeach; ?>
             </tbody>
-    </table>
+        </table>
+    </div>
 </div>
 
-<?php include(__DIR__ . '/../_footer.php'); ?>
+<?php 
+if(!strpos($_SERVER['REQUEST_URI'], 'add_prescription.php')){
+    
+}else{
+  include(__DIR__ . '/../_footer.php');
+}
+
+ ?>

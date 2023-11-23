@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2023 at 08:06 PM
+-- Generation Time: Nov 23, 2023 at 04:20 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -45,6 +45,7 @@ CREATE TABLE `consultation` (
   `type` varchar(50) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
+  `note` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -53,16 +54,24 @@ CREATE TABLE `consultation` (
 -- Dumping data for table `consultation`
 --
 
-INSERT INTO `consultation` (`consultation_id`, `patient_id`, `stat`, `type`, `date`, `time`, `created_at`, `updated_at`) VALUES
-(91, 25, 'approved', 'urinalysis', '2023-09-20', '15:19:00', '2023-09-14 09:49:21', '2023-09-14 09:49:21'),
-(95, 22, 'cancelled', 'urinalysis', '2023-09-28', '14:21:00', '2023-09-14 09:51:08', '2023-09-14 09:51:08'),
-(96, 22, 'cancelled', 'urinalysis', '2023-09-17', '04:21:00', '2023-09-14 09:51:16', '2023-09-14 09:51:16'),
-(97, 24, 'approved', 'xray', '2023-09-24', '15:22:00', '2023-09-14 09:52:18', '2023-09-14 09:52:18'),
-(98, 24, 'approved', 'xray', '2023-09-25', '12:25:00', '2023-09-14 09:52:27', '2023-09-14 09:52:27'),
-(99, 24, 'approved', 'xray', '2023-09-18', '00:26:00', '2023-09-14 09:52:42', '2023-09-14 09:52:42'),
-(100, 24, 'pending', 'consultation', '2023-09-26', '11:59:00', '2023-09-15 07:29:36', '2023-09-15 07:29:36'),
-(101, 25, 'pending', 'xray', '2023-09-20', '11:07:00', '2023-09-15 21:38:11', '2023-09-15 21:38:11'),
-(102, 22, 'cancelled', 'xray', '2023-09-27', '15:17:00', '2023-09-16 18:47:49', '2023-09-16 18:47:49');
+INSERT INTO `consultation` (`consultation_id`, `patient_id`, `stat`, `type`, `date`, `time`, `note`, `created_at`, `updated_at`) VALUES
+(91, 25, 'approved', 'urinalysis', '2023-09-20', '15:19:00', NULL, '2023-09-14 09:49:21', '2023-09-14 09:49:21'),
+(95, 22, 'cancelled', 'urinalysis', '2023-09-28', '14:21:00', NULL, '2023-09-14 09:51:08', '2023-09-14 09:51:08'),
+(96, 22, 'cancelled', 'urinalysis', '2023-09-17', '04:21:00', NULL, '2023-09-14 09:51:16', '2023-09-14 09:51:16'),
+(100, 24, 'cancelled', 'consultation', '2023-09-26', '11:59:00', NULL, '2023-09-15 07:29:36', '2023-09-15 07:29:36'),
+(101, 25, 'pending', 'xray', '2023-09-20', '11:07:00', NULL, '2023-09-15 21:38:11', '2023-09-15 21:38:11'),
+(102, 22, 'cancelled', 'xray', '2023-09-27', '15:17:00', NULL, '2023-09-16 18:47:49', '2023-09-16 18:47:49'),
+(103, 23, 'approved', 'urinalysis', '2023-10-18', '15:32:00', NULL, '2023-10-09 22:54:45', '2023-10-10 22:02:33'),
+(104, 23, 'approved', 'xray', '2023-10-25', '13:12:00', NULL, '2023-10-10 18:42:47', '2023-10-10 18:42:47'),
+(105, 24, 'pending', 'xray', '2023-10-27', '16:01:00', NULL, '2023-10-10 21:29:01', '2023-10-10 22:32:03'),
+(106, 24, 'pending', 'xray', '2023-10-26', '15:30:00', NULL, '2023-10-10 22:00:15', '2023-10-10 22:00:15'),
+(107, 22, 'pending', 'xray', '2023-11-29', '13:52:00', NULL, '2023-11-12 10:18:01', '2023-11-23 19:21:59'),
+(108, 22, 'pending', 'xray', '2023-11-25', '00:00:00', NULL, '2023-11-22 15:56:03', '2023-11-23 19:40:43'),
+(109, 22, 'pending', 'xray', '2023-11-30', '11:44:00', NULL, '2023-11-23 12:14:59', '2023-11-23 12:14:59'),
+(110, 22, 'pending', 'urinalysis', '2023-11-28', '00:00:00', 'please', '2023-11-23 12:20:51', '2023-11-23 19:42:59'),
+(112, 22, 'pending', 'xray', '2023-11-27', '08:18:00', 'asd', '2023-11-23 19:48:54', '2023-11-23 19:48:54'),
+(113, 22, 'pending', 'xray', '2023-11-30', '14:33:00', 'tonight is killing me', '2023-11-23 20:03:41', '2023-11-23 20:11:22'),
+(114, 22, 'pending', 'xray', '2023-11-29', '14:00:00', 'shesssh', '2023-11-23 20:04:57', '2023-11-23 20:14:45');
 
 -- --------------------------------------------------------
 
@@ -134,10 +143,10 @@ CREATE TABLE `health_monitoring` (
 --
 
 INSERT INTO `health_monitoring` (`health_monitoring_id`, `patient_pid`, `weight`, `height`, `blood_pressure`, `note`, `created_at`, `updated_at`, `doctor_id`, `status`) VALUES
-(7, 22, 40, 165, '100/72', 'ok', '2023-09-14 10:23:50', '2023-09-14 10:23:50', NULL, 'active'),
+(7, 22, 40, 165, '100/72    ', '50/50', '2023-09-14 10:23:50', '2023-11-22 15:26:29', NULL, 'active'),
 (8, 25, 55, 165, '145/55', 'Healthy', '2023-09-14 10:33:50', '2023-09-14 10:33:50', NULL, 'active'),
 (9, 23, 60, 165, '180/65', 'very healthy', '2023-09-14 10:35:09', '2023-09-16 10:00:53', NULL, 'active'),
-(10, 24, 50, 154, '165/55', 'need check up', '2023-09-14 10:35:57', '2023-09-14 10:35:57', NULL, 'active');
+(10, 24, 50, 154, '165/55    ', 'not ok', '2023-09-14 10:35:57', '2023-11-16 10:07:45', NULL, 'active');
 
 -- --------------------------------------------------------
 
@@ -148,8 +157,13 @@ INSERT INTO `health_monitoring` (`health_monitoring_id`, `patient_pid`, `weight`
 CREATE TABLE `medicine_inventory` (
   `medicine_id` int(11) NOT NULL,
   `med_name` varchar(50) NOT NULL,
+  `med_desc` varchar(255) DEFAULT NULL,
   `med_qty` int(50) NOT NULL,
   `status` varchar(50) NOT NULL,
+  `acquired_by` int(11) DEFAULT NULL,
+  `med_dosage` int(5) DEFAULT NULL,
+  `med_unit` varchar(5) DEFAULT NULL,
+  `recent_acquired` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -158,9 +172,11 @@ CREATE TABLE `medicine_inventory` (
 -- Dumping data for table `medicine_inventory`
 --
 
-INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_qty`, `status`, `updated_at`, `created_at`) VALUES
-(3, 'Mefenamic', 713, 'high', '2023-09-16 23:01:05', NULL),
-(4, 'Amoxicillin', 4742, 'good', '2023-09-16 22:46:33', NULL);
+INSERT INTO `medicine_inventory` (`medicine_id`, `med_name`, `med_desc`, `med_qty`, `status`, `acquired_by`, `med_dosage`, `med_unit`, `recent_acquired`, `updated_at`, `created_at`) VALUES
+(3, 'Mefenamic', NULL, 1715, 'high', 1, 250, 'mg', NULL, '2023-11-14 08:30:23', NULL),
+(4, 'Amoxicillin', NULL, 5801, 'good', 1, 250, 'mg', '2023-11-22 15:29:13', '2023-11-22 15:29:13', NULL),
+(6, 'Paracetamol', 'for Colds', 1600, '', 1, 250, 'mg', '2023-11-23 20:31:43', '2023-11-23 20:31:43', '2023-11-14 09:24:20'),
+(7, 'Buscopan', 'pain killer', 955, '', 1, 500, 'mg', '2023-11-22 15:36:18', '2023-11-22 15:36:18', '2023-11-22 15:31:11');
 
 -- --------------------------------------------------------
 
@@ -245,14 +261,25 @@ CREATE TABLE `prescription` (
 
 INSERT INTO `prescription` (`prescription_id`, `note`, `diagnosis`, `status`, `patient_id`, `doctor_id`, `created_at`, `updated_at`) VALUES
 (6, 'paracetamol - 3/day', 'tb', '', 24, NULL, '2023-09-16 19:03:58', '0000-00-00 00:00:00'),
-(7, 'Kisspirin - 3x/day', 'Selos', '', 22, NULL, '2023-09-16 19:04:45', '0000-00-00 00:00:00'),
-(8, 'kulog payo', 'TB', '', 23, NULL, '2023-09-16 23:02:04', '0000-00-00 00:00:00'),
 (9, 'paracetamol 5x/day', 'Migraine', '', 24, NULL, '2023-09-16 23:03:11', '0000-00-00 00:00:00'),
 (10, 'this is sever', 'TB', '', 24, NULL, '2023-09-16 23:05:37', '0000-00-00 00:00:00'),
 (11, 'this is sever', 'TB', '', 24, NULL, '2023-09-16 23:15:31', '0000-00-00 00:00:00'),
 (12, 'asdsda', 'Migraine', '', 24, NULL, '2023-09-16 23:15:40', '0000-00-00 00:00:00'),
-(13, 'asdsda', 'Migraine', '', 24, NULL, '2023-09-16 23:15:46', '0000-00-00 00:00:00'),
-(14, 'sfsfd', 'Asthma', '', 23, NULL, '2023-09-16 23:16:19', '0000-00-00 00:00:00');
+(16, 's;ld;dflgk', 'shesh', '', 24, NULL, '2023-09-20 21:53:44', '0000-00-00 00:00:00'),
+(17, 's;ld;dflgk', 'shesh', '', 24, NULL, '2023-09-20 22:04:38', '0000-00-00 00:00:00'),
+(18, 'asdads', 'sheshdasdad', '', 24, NULL, '2023-09-20 22:04:49', '0000-00-00 00:00:00'),
+(19, 'asdads', 'sheshdasdad', '', 24, NULL, '2023-09-20 22:04:57', '0000-00-00 00:00:00'),
+(20, 'asdasds', 'asdasd', '', 24, NULL, '2023-09-20 22:05:29', '0000-00-00 00:00:00'),
+(21, 'asdasdsad', 'sheshdasdad', '', 24, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(22, 'adsas', 'asd', '', 24, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(23, 'asd', 'asd', '', 25, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(25, 'Diagnosis', 'Colds', '', 22, NULL, '2023-11-12 10:27:08', '0000-00-00 00:00:00'),
+(26, 'Neozep - 3x/day\r\nBiogesic - if feverish', 'Colds', '', 22, NULL, '2023-11-12 10:27:49', '0000-00-00 00:00:00'),
+(27, 'pahingalo', 'bad', '', 23, NULL, '2023-11-13 20:49:23', '0000-00-00 00:00:00'),
+(28, 'posfkspofk', 'kulog payo', '', 24, NULL, '2023-11-16 16:25:07', '0000-00-00 00:00:00'),
+(29, 'shesssh', 'kulog payo', '', 24, NULL, '2023-11-16 16:28:29', '0000-00-00 00:00:00'),
+(30, 'paracetamol', 'kulogy payo', '', 22, NULL, '2023-11-16 16:29:30', '0000-00-00 00:00:00'),
+(31, 'biogesic - 5x/day', 'tb', '', 22, NULL, '2023-11-22 15:27:45', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -267,6 +294,7 @@ CREATE TABLE `request_medicine` (
   `quantity` int(11) NOT NULL,
   `status` varchar(250) NOT NULL,
   `patient_id` int(11) NOT NULL,
+  `approved_by` varchar(255) DEFAULT NULL,
   `prescription_id` int(10) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -276,11 +304,13 @@ CREATE TABLE `request_medicine` (
 -- Dumping data for table `request_medicine`
 --
 
-INSERT INTO `request_medicine` (`request_medicine_id`, `medicine_id`, `note`, `quantity`, `status`, `patient_id`, `prescription_id`, `created_at`, `updated_at`) VALUES
-(33, 4, 'kulog payo', 15, 'pending', 25, 0, '2023-09-15 22:02:10', '2023-09-15 22:02:10'),
-(34, 4, 'not feeling well', 14, 'approved', 25, 0, '2023-09-15 22:02:39', '2023-09-15 22:02:39'),
-(35, 4, 'aint feeling well', 15, 'pending', 25, 0, '2023-09-15 22:03:15', '2023-09-15 22:03:15'),
-(36, 4, 'this is the note', 21, 'pending', 22, 0, '2023-09-16 18:57:35', '2023-09-16 18:57:35');
+INSERT INTO `request_medicine` (`request_medicine_id`, `medicine_id`, `note`, `quantity`, `status`, `patient_id`, `approved_by`, `prescription_id`, `created_at`, `updated_at`) VALUES
+(60, 4, 'asdf', 21, 'claimed', 24, NULL, 19, '2023-10-10 20:28:24', '2023-10-10 20:28:24'),
+(68, 4, 'sdfsd', 23, 'claimed', 22, 'Farma Ceased', 25, '2023-11-12 11:16:45', '2023-11-12 11:16:45'),
+(69, 4, 'sss', 25, 'approved', 22, 'Farma Ceased', 25, '2023-11-12 22:23:30', '2023-11-22 15:37:11'),
+(70, 4, 'penge', 5, 'approved', 22, 'Farma Ceased', 25, '2023-11-14 10:57:27', '2023-11-22 15:37:51'),
+(71, 7, 'sample note', 45, 'approved', 22, 'Farma Ceased', 26, '2023-11-22 15:41:15', '2023-11-23 11:09:18'),
+(72, 6, 'painful', 50, 'approved', 22, 'Farma Ceased', 0, '2023-11-23 20:30:36', '2023-11-23 20:31:05');
 
 -- --------------------------------------------------------
 
@@ -410,7 +440,7 @@ ALTER TABLE `webuser`
 -- AUTO_INCREMENT for table `consultation`
 --
 ALTER TABLE `consultation`
-  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `consultation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `desk_officer`
@@ -434,7 +464,7 @@ ALTER TABLE `health_monitoring`
 -- AUTO_INCREMENT for table `medicine_inventory`
 --
 ALTER TABLE `medicine_inventory`
-  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `patient`
@@ -452,13 +482,13 @@ ALTER TABLE `pharmacist`
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
-  MODIFY `prescription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `prescription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `request_medicine`
 --
 ALTER TABLE `request_medicine`
-  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `request_medicine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- Constraints for dumped tables

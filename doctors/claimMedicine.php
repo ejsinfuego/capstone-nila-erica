@@ -1,5 +1,8 @@
 <?php
 session_start();
+if($_SESSION['usertype'] == 'p' or $_SESSION['usertype'] == ''){
+    header('Location: ../login_v2.php');
+}
 require '../vendor/autoload.php';
 
 use Carbon\Carbon;

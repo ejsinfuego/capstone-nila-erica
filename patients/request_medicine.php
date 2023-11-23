@@ -1,11 +1,20 @@
 <?php 
 $title = "Request Medicine";
 // include(__DIR__ . '/../_header_v2.php'); 
+if(!strpos($_SERVER['REQUEST_URI'], 'request_medicine.php')){
+    
+}else{ 
+    session_start();
+    if( $_SESSION['usertype'] == 'd' or $_SESSION['usertype'] == ''){
+    header('location: ../login_v2.php');
+    }
+    session_abort();
+    include(__DIR__ . '/../_header_v2.php');
+}
 ?>
 
             <div class="col" style="padding-left: 38px;padding-right: 88px;padding-top: 27px;background: #f1f0f0;border-radius: 10px;font-family: Montserrat, sans-serif;">
                 <?php
-                            
                     //get available medicine list from database
                     $medicinerow = $database->query("select * from medicine_inventory where med_qty >0");
                     $medicinefetch=$medicinerow->fetch_assoc();

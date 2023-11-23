@@ -11,7 +11,7 @@ if($_SESSION['usertype'] != 'p'){
     header('location: ../unauthorized.php');
 }
     //get available medicine list from database
-    $appointments = $database->query("select patient.f_name, patient.l_name, patient.pid, consultation.consultation_id, consultation.type, consultation.patient_id, consultation.date, consultation.time, consultation.stat from consultation inner join patient on consultation.patient_id = patient.pid where patient_id = $userid");
+    $appointments = $database->query("select patient.f_name, patient.l_name, patient.pid, consultation.consultation_id, consultation.type, consultation.patient_id, consultation.note, consultation.date, consultation.time, consultation.stat from consultation inner join patient on consultation.patient_id = patient.pid where patient_id = $userid");
     $appointments_booked=$appointments->fetch_assoc();
 
     $services = $database->query("select * from services");
@@ -44,14 +44,19 @@ function cancelAppointment(appointment_id){
     xhttp.send();
 }
 
+function edit(id){
+    $('#updateAppointment').modal('show');
+    let appointmentid = id;
+    $('#appointmentid').val(appointmentid);
+}
 
 $(document).ready(function(){
-    $('.editAppointment').click(function(){
-        $('#updateAppointment').modal('show');
-        let appointmentid = document.getElementById('id').value;
-        $('#appointmentid').val(appointmentid);
-        
-    })
+
+    // $('.editAppointment').click(function(id){
+    //     $('#updateAppointment').modal('show');
+    //     let appointmentid = document.getElementById('id').value;
+    //     $('#appointmentid').val(appointmentid);
+    // })
 });
 </script>
 <!-- required bootstrap js -->
@@ -74,7 +79,7 @@ $(document).ready(function(){
         <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center; font-weight: bold;text-shadow: 2px 2px #abb2b9;">Appointments Schedule</h1>
         <p>List of Appointments</p>
         <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                    <table class="table table-sm" id="sortTable">
+                    <table class="table table-sm compact sortTable" id="sortTable">
                         <thead>
                             <tr></tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
@@ -82,11 +87,14 @@ $(document).ready(function(){
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Status</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Date</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Time</th>
+                                <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Note</th>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);"></th>
                             </tr>
                         </thead>
                         <tbody style="border-style: solid;background: rgba(255,255,255,0);">
                         <?php foreach($appointments as $appointment):
+                                $i = 0;
+                                $id = $appointment['consultation_id'];
                                 $patient_name = $appointment['f_name']." ".$appointment['l_name'];
                                 $appointment['type'] = ucfirst($appointment['type']);
                                 $appointment['stat'] = ucfirst($appointment['stat']);
@@ -96,18 +104,26 @@ $(document).ready(function(){
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0); font-weight: bold;'><?php echo $patient_name; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['type']; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['stat']; ?></td>
-                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['date']; ?></td>
+                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo date('M d, Y', strtotime($appointment['date'])); ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['time']; ?>
                                 </td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
+                                <?php echo $appointment['note'] ??'';?>
+                                </td>
+                                <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
                                 <?php if($appointment['stat'] != "Cancelled"): ?>
-                                <button id="editAppointment" class='editAppointment btn btn-primary btn-sm' type='button' style='background: #2ecc71;border-style: none;'>Update</button>
-                                <input type="hidden" id="id" name="appointmentid" value="<?php echo $appointment['consultation_id']; ?>">
+
+                                <button id="editAppointment" onclick="edit(<?php echo $id; ?>)" class='editAppointment btn btn-primary btn-sm' type='button' style='background: #2ecc71;border-style: none;'>Update</button>
+
+                                <input type="hidden" id="id<?=$i;?>" name="appointmentid" value="<?php echo $appointment['consultation_id']; ?>">
                                 <button type="submit" onclick="cancelAppointment(<?php echo $appointment['consultation_id']; ?>)" class='text-danger' type='button' style='border-style: none; margin-left: 10px;'>Cancel</button>
                                 <?php endif; ?>
                                 </td>
                                 </tr>
-                        <?php endforeach; ?>
+                        
+                        <?php
+                         $i = ++$i;
+                         endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -119,7 +135,7 @@ $(document).ready(function(){
                 <div class="container" style="padding-bottom: 9px;padding-top: 16px;">
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center;margin-top: 13px;margin-bottom: 2px;font-weight: bold;text-shadow: 2px 2px #abb2b9;" class="px-xxl-5 mx-xxl-5">Medicine Requests</h1>
                 </div>
-                    <table class="table table-sm" id="sortTable">
+                    <table class="table table-sm compact sortTable" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Medicine Name</th>
@@ -154,7 +170,7 @@ $(document).ready(function(){
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center; font-weight: bold;text-shadow: 2px 2px #abb2b9;">Prescriptions</h1>
                 <p>List your Prescriptions</p>
                 <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                    <table class="table" id="sortTable">
+                    <table class="table table-sm compact sortTable" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Prescription ID</th>
@@ -207,16 +223,17 @@ $(document).ready(function(){
             <div class="modal-body">
                 <form method="post" action="edit_appointment.php">
                 <label for="appointmentDate">Appointment Date</label>
-                <input type="date" name="appointmentDate" id="appointmentDate" class="form-control">
+                <input type="date" min="<?php echo date("Y-m-d"); ?>" name="appointmentDate" id="appointmentDate" class="form-control">
                 <label for="appointmentTime">Appointment Time</label>
-                <input type="time" name="appointmentTime" id="appointmentTime" class="form-control">
+                <input type="time" name="appointmentTime" id="appointmentTime" class="form-control"  min="08:00" max="17:00">
                 <input type="hidden" id="appointmentid" name="appointmentid">
                 <label for="appointmentType">Appointment Type</label>
                 <select class="form-control" name="appointmentType">
-                    <optgroup>Types</optgroup>
-                    <option value="consultation" selected="">Consultation</option>
-                            <option value="xray">Xray</option>
-                            <option value="urinalysis">Urinalysis</option>
+                    <optgroup>Consultation</optgroup>
+                    <option value="" selected=""></option>
+                    <option value="consultation">Consultation</option>
+                    <option value="xray">Xray</option>
+                    <option value="urinalysis">Urinalysis</option>
                 </select>
             </div>
             <div class="modal-footer">
@@ -226,15 +243,7 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-<div id="request_medicine" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <?php include('request_medicine.php'); ?>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- //scrpt for bootstrap tab -->
 <script>
