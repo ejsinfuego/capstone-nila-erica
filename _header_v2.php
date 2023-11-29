@@ -228,7 +228,7 @@ session_start();
             <div class="collapse navbar-collapse" id="navcol-1" style="color: #fbfff1;font-family: Montserrat, sans-serif;">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link active" href="<?php echo $appointment_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Appointment</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo $med_link; ?>" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
+                    <li class="nav-item"><a class="nav-link" href="medicine_requests.php" style="font-family: Montserrat, sans-serif;color: #fbfff1;">Medicine</a></li>
                 </ul>
                 <div class="justify-content-center me-3">
                     <strong><?php echo $username; ?></strong>
@@ -296,7 +296,7 @@ session_start();
     </div>
 
 
-    <?php if($title == "Index") : ?>
+    <?php if(strpos($_SERVER['REQUEST_URI'], 'index.php')) : ?>
         <div class="container" style="margin-top: 45px;"></div>
         <?php if($_SESSION['usertype'] == 'd') { 
              $check_patients = '<a class="nav-link text-center d-flex d-lg-flex d-xxl-flex justify-content-center align-items-center flex-nowrap order-first align-items-lg-center align-items-xxl-center nav-sidebar" href="#" style="font-size: 0.7rem;border-style: none; padding: 7px 5px 7px 10px; border-radius: 1px;">

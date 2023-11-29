@@ -1,11 +1,15 @@
 <?php 
 $title= 'Prescriptions';
 $border = "border-left: 3px solid #2E8B57;";
-
-include(__DIR__ . '/../_header_v2.php');
-
-if( $_SESSION['usertype'] != 'p'){
-    header('location: ../unauthorized.php');
+if(!strpos($_SERVER['REQUEST_URI'], 'prescription.php')){
+    
+}else{ 
+    session_start();
+    if( $_SESSION['usertype'] == 'd' or $_SESSION['usertype'] == ''){
+    header('location: ../login_v2.php');
+    }
+    session_abort();
+    include(__DIR__ . '/../_header_v2.php');
 }
 $prescriptions = $database->query("select * from prescription where patient_id = ".$userid);
 ?>
@@ -13,7 +17,7 @@ $prescriptions = $database->query("select * from prescription where patient_id =
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center; font-weight: bold;text-shadow: 2px 2px #abb2b9;">Prescriptions</h1>
                 <p>List your Prescriptions</p>
                 <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                    <table class="table" id="sortTable">
+                    <table class="table sortTable" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Prescription ID</th>

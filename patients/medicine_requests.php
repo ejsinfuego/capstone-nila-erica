@@ -1,12 +1,17 @@
 <?php 
 $title = "Medicine Requests";
 $border = "border-left: 3px solid #2E8B57;";
-include(__DIR__ . '/../_header_v2.php'); ?>
+ ?>
 <?php 
 
-    if( $_SESSION['usertype'] != 'p'){
-        header('location: ../unauthorized.php');
+if(strpos($_SERVER['REQUEST_URI'], 'medicine_requests.php')){
+    session_start();
+    if( $_SESSION['usertype'] == 'd' or $_SESSION['usertype'] == ''){
+    header('location: ../login_v2.php');
     }
+    session_abort();
+    include(__DIR__ . '/../_header_v2.php');
+} 
 
     //get available medicine list from database
     //sql command which gets the med name and patient name in using request_medicine table using inner join
@@ -53,4 +58,8 @@ include(__DIR__ . '/../_header_v2.php'); ?>
             </div>
         </div>
     </div>
-<?php include(__DIR__ . '/../_footer.php'); ?>
+<?php 
+    if(strpos($_SERVER['REQUEST_URI'], 'medicine_requests.php')){
+        include('../_footer.php');
+    } 
+ ?>

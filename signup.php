@@ -80,9 +80,9 @@ if($_POST){
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-8 col-xl-4 col-xxl-5 d-sm-flex">
+                <div class="col-md-4 col-lg-8 col-xl-6 col-xxl-5 d-sm-flex flex-wrap">
                     <div class="card mb-5" style="width: 532.987px;">
-                        <div class="card-body d-flex flex-row justify-content-start flex-nowrap justify-content-lg-start align-items-lg-center" style="width: 508.987px;margin-left: 6px;">
+                    <div class="card-body d-flex flex-wrap justify-content-start flex-nowrap justify-content-lg-start align-items-lg-center" style="width: 508.987px;margin-left: 6px;">
                     <form class="text-center d-flex flex-row flex-wrap justify-content-lg-start align-items-lg-center" method="POST" style="width: 489px;margin-left: 21px;margin-top: 20px;" action="">
                                 <div class="mb-3" style="margin-right: 12px;">
                                 <label class="form-label d-lg-flex justify-content-lg-start">First Name</label>

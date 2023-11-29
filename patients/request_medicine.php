@@ -1,15 +1,15 @@
 <?php 
 $title = "Request Medicine";
 // include(__DIR__ . '/../_header_v2.php'); 
-if(!strpos($_SERVER['REQUEST_URI'], 'request_medicine.php')){
-    
-}else{ 
+if(strpos($_SERVER['REQUEST_URI'], 'request_medicine.php')){
     session_start();
     if( $_SESSION['usertype'] == 'd' or $_SESSION['usertype'] == ''){
     header('location: ../login_v2.php');
     }
     session_abort();
     include(__DIR__ . '/../_header_v2.php');
+}else{ 
+    
 }
 ?>
 
@@ -64,4 +64,6 @@ if(!strpos($_SERVER['REQUEST_URI'], 'request_medicine.php')){
         </div>
     </div>
   
-<!-- <?php include(__DIR__ .'/../_footer.php'); ?> -->
+<?php if(strpos($_SERVER['REQUEST_URI'], 'request_medicine.php')){
+    include(__DIR__ .'/../_footer.php');
+}else{} ;?> 
