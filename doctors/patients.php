@@ -27,11 +27,6 @@ if($_SESSION['usertype'] == 'p'){
         $patients = [];
     }
 
-    foreach($patients as $key => $patient){
-        $age = date_diff(date_create($patient['pdob']), date_create('now'))->y;
-        $patients[$key]['age'] = $age;
-    }
-    
 
 ?>
 <div class="col d-lg-flex flex-column align-items-lg-center <?php if(!strpos($_SERVER['REQUEST_URI'], 'patients.php')){
@@ -45,7 +40,7 @@ if($_SESSION['usertype'] == 'p'){
         <small>Click the name of patient for more information.</small>
         <hr style="width: 535px;margin-top: 0px;color: #1e80c1;">
     <div class="py-2 w-100" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-    <table class="table table-sm sortTable" id="sorTable" style="font-size: 15px;">
+    <table class="table table-sm patient sortTable" id="sortTable" style="font-size: 15px;">
             <thead>
                 <tr>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
@@ -72,7 +67,10 @@ if($_SESSION['usertype'] == 'p'){
         </table>
     </div>
 </div>
-
+<script>
+     //reintialize table
+     
+</script>
 <?php 
 if(!strpos($_SERVER['REQUEST_URI'], 'add_prescription.php')){
     

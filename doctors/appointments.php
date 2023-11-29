@@ -109,13 +109,17 @@ include(__DIR__ . '/../_header_v2.php');
                                 <?= date('M d, Y', strtotime($appointment['created_at'])) ?? '' ;?>
                                 </td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
-                                <?php if($appointment['stat'] != "Cancelled" and $appointment['stat'] != "Approved"): ?>
-                                <form method="GET" action="approveAppointment.php">
-                                <input type="hidden" id="id" name="appointment_id" value="<?php echo $appointment['consultation_id']; ?>">
-                                <button id="editAppointment" class='editAppointment btn btn-primary btn-sm' type='submit' style='background: #2ecc71;border-style: none;'>Approve</button>
-                                </form>
-                                <?php else : ?>
 
+                                <?php if($_SESSION['usertype'] == 'do') : ?>
+
+                                    <?php if($appointment['stat'] != "Cancelled" and $appointment['stat'] != "Approved"): ?>
+                                    <form method="GET" action="approveAppointment.php">
+                                    <input type="hidden" id="id" name="appointment_id" value="<?php echo $appointment['consultation_id']; ?>">
+                                    <button id="editAppointment" class='editAppointment btn btn-primary btn-sm' type='submit' style='background: #2ecc71;border-style: none;'>Approve</button>
+                                    </form>
+                                    <?php else : ?>
+
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 </td>
                                 </tr>
@@ -133,7 +137,7 @@ include(__DIR__ . '/../_header_v2.php');
                 <h1 style="font-family: Montserrat, sans-serif;border-radius: 10px;background: transparent;text-align: center; font-weight: bold;text-shadow: 2px 2px #abb2b9;">Prescriptions</h1>
                 <p>List your Prescriptions</p>
                 <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
-                    <table class="table sortTable" id="sortTable">
+                    <table class="table table-sm sortTable" id="sortTable">
                         <thead>
                             <tr>
                                 <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Prescription ID</th>
@@ -174,9 +178,6 @@ include(__DIR__ . '/../_header_v2.php');
             </div>
     </div>
     <div id="menu3" class="container tab-pane fade">
-        <?php include('patients.php'); ?>
-    </div>
-    <div id="menu3"  class="container tab-pane fade" style="background: #f1f0f0;font-family: Montserrat, sans-serif;border-radius: 10px; border: 2px solid #2E8B57;">
         <?php include('patients.php'); ?>
     </div>
     <div id="menu4" class="container tab-pane fade">

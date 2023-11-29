@@ -150,15 +150,20 @@ if(isset($_GET['pid'])){
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['date']; ?></td>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'><?php echo $appointment['time']; ?>
                                 </td>
-                                <?php if($_SESSION['usertype'] == 'do') : ?>
                                 <td style='font-family: Montserrat, sans-serif;border-width: 1px;border-style: solid;background: rgba(255,255,255,0);'>
-                                <?php if($appointment['stat'] != "Cancelled"): ?>
-                                <button id="editAppointment" class='editAppointment btn btn-primary btn-sm' type='button' style='background: #2ecc71;border-style: none;'>Update</button>
-                                <input type="hidden" id="id" name="appointmentid" value="<?php echo $appointment['consultation_id']; ?>">
-                                <button type="submit" onclick="cancelAppointment(<?php echo $appointment['consultation_id']; ?>)" class='text-danger' type='button' style='border-style: none; margin-left: 10px;'>Cancel</button>
+
+                                <?php if($_SESSION['usertype'] == 'do') : ?>
+
+                                <?php if($appointment['stat'] != "Cancelled" and $appointment['stat'] != "Approved"): ?>
+                                <form method="GET" action="approveAppointment.php">
+                                <input type="hidden" id="id" name="appointment_id" value="<?php echo $appointment['consultation_id']; ?>">
+                                <button id="editAppointment" class='editAppointment btn btn-primary btn-sm' type='submit' style='background: #2ecc71;border-style: none;'>Approve</button>
+                                </form>
+                                <?php else : ?>
+
+                                <?php endif; ?>
                                 <?php endif; ?>
                                 </td>
-                                <?php endif; ?>
                                 </tr>
                         <?php endforeach; ?>
                         </tbody>

@@ -16,7 +16,7 @@ $prescriptions = $database->query('select patient.f_name, patient.l_name, prescr
     <p>List of Patients' Prescriptions</p>
     <div class="py-2" style="font-family: Alatsi, sans-serif;text-align: left;--bs-body-bg: var(--bs-primary-bg-subtle);--bs-body-font-weight: normal;border-radius: 15px;padding-right: 0px;background: #f1f0f0;">
     <hr style="width: 535px; color: #2E8B57;">
-        <table class="table table-sm table-hover" id="sortTable">
+        <table class="table table-sm table-hover sortTable" id="sortTable">
             <thead>
                 <tr>
                     <th style="border-style: solid;font-family: Montserrat, sans-serif;background: rgba(255,255,255,0);">Patient Name</th>
