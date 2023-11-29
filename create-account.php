@@ -106,16 +106,16 @@ if($_POST){
         </section>
         <div class="container">
             <div class="row d-flex justify-content-center">
-                <div class="col-xxl-3" style="height: auto;margin-bottom: -51px;">
+                <div class="col-xxl-12" style="height: auto;margin-bottom: -51px;">
                     <div class="row mb-5" style="height: auto;">
-                        <div class="col-md-8 col-xl-6 text-center mx-auto px-lg-0" style="padding-left: 0px;padding-right: 0px;width: 325px;height: 47.4px;">
+                        <div class="col-8 col-md-8 col-xl-10 text-center mx-auto px-lg-0" style="padding-left: 0px;padding-right: 0px;width: 325px;height: 47.4px;">
                             <h2>Let's get started</h2>
                             <p class="w-lg-50">Now, create your log-ins.</p>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">
-                        <div class="col-md-6 col-xl-4 col-xxl-12">
-                            <div class="card mb-5">
+                        <div class="col-md-10 col-xl-8 col-xxl-12">
+                            <div class="card flex mb-5">
                                 <div class="card-body d-flex flex-column align-items-center">
                                     <label class="form-label">Email</label>
                                     <form class="text-center" method="post">
